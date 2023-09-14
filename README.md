@@ -7,6 +7,15 @@ The idea behind our project is to create a computer online store that offers a w
 
 ### Installing
 
+## Clone 
+git clone https://github.com/yourusername/online-computer-store.git
+
+## Navigate Project
+cd arvutipoe-api
+
+## Start Project
+code .
+
 
 ## Authors
 
