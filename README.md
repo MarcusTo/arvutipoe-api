@@ -8,7 +8,7 @@ The idea behind our project is to create a computer online store that offers a w
 ### Installing
 
 ## Github
-Open <>Code in Github and copy  file link. Open Powershell or Git Bash by holding down shift and right-clicking in the file you want to clone the project into.
+Open <>Code in Github and copy  file link. Open Powershell or Git Bash by holding down shift and right-clicking in the file you want to clone the project into
 
 ## Navigate Project
 cd arvutipoe-api
