@@ -4,7 +4,8 @@
   "description": "The idea behind our project is to create a computer online store that offers a wide range of high-quality computers, computer equipment, accessories and related services such as; computer repair and maintenance services",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon ."
   },
   "repository": {
     "type": "git",
@@ -15,6 +16,10 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.18.2",
+    "nodemon": "^3.0.1",
     "swagger-ui-express": "^5.0.0"
+  },
+  "nodemonConfig":{
+    "ext":"js,json,html,yaml"
   }
 }
