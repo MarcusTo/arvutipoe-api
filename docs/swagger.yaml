@@ -1,0 +1,188 @@
+openapi: 3.0.2
+info:
+    title: Computers-API
+    version: 1.0.0
+    description: >-
+        ### This is a Swagger UI for our Games API  
+
+
+        ### Error handling
+
+        Errors are presented using the HTTP status codes 400-599. The response include a more detailed
+        explanation about the error in the body.
+
+
+        ```
+
+        {
+          "error": "Cleartext explanation of the error that occurred"
+        }
+
+        ```
+
+
+        ### Generic API errors
+
+        These error responses can be returned by any of the described endpoints.
+
+
+        | HTTP status  |  Description |
+
+        |---|---|
+
+        | 400| Bad input parameters or invalid request. More information can be found in the response body.
+
+        | 401| The consumer does not have access to the requested resource or the provided token is not valid.
+
+        | 404| The requested resource can not be found or the user does not have access to the resource.
+
+        | 5XX| A server error has occurred while processing the request.
+paths:
+    /orders:
+        get:
+            tags:
+                - orders
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                type: string
+                            examples:
+                                Get a list of all orders:
+                                    value: |-
+                                        [
+                                            {orderID:1, ProductID:8, ]}
+                                            {orderID:4, ProductID:9]}
+                                        ]
+            summary: Get a list of all ORDERS
+            description: |+
+                RETURNS a list of all ORDERS
+
+    /invoices:
+        get:
+            tags:
+                - invoices
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    type: string
+                            examples:
+                                Get a list of all invoices:
+                                    value: |-
+                                        [
+                                            [
+                                            {orderID:1, clientID:2, invoiceID: 3,description:["Intel® Core™ i5-13600KF","GIGABYTE B760 GAMING","GeForce RTX™ 4060 8GB","16GB DDR5","1000 GB HDD"]},
+                                            {orderID:4, clientID:5, invoiceID: 6,description:["Intel Core i5-12400F","GIGABYTE H610","GeForce RTX™ 4060 8GB","16GB DDR5","1000 GB HDD"]}
+                                        ]
+                                        ]
+            summary: Get a list of all INVOICES
+            description: RETURNS a list of all INVOICES
+    /users:
+        get:
+            tags:
+                - users
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/user'
+                            examples:
+                                List of users:
+                                    value:
+                                        - Marcus Toman
+                                        - Rasmus Jalakas
+                    description: Returns a list of users
+                '404':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
+                            examples:
+                                User not found:
+                                    value:
+                                        Error: User not found
+            summary: Get by ID
+            description: RETURNS a list of all USERS
+    '/products{id}':
+        description: ''
+        get:
+            tags:
+                - products
+            parameters:
+                -
+                    name: id
+                    description: Identificator for the product
+                    schema:
+                        type: integer
+                    in: path
+                    required: true
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    type: string
+                            examples:
+                                Single product:
+                                    value: |-
+                                        [
+                                            {id:1,name:"Gaming PC Ultra", price: 3999}
+                                        ]
+                    description: Returns a list of computers
+                '404':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
+                            examples:
+                                error:
+                                    value:
+                                        Error: Product not found
+                    description: Product was not found.
+            summary: Get a list of all PRODUCTS
+            description: |
+                Identifier of product
+        parameters:
+            -
+                name: id
+                in: path
+                required: true
+    products:
+        get:
+            tags:
+                - games
+            responses:
+                '200': {}
+            summary: Get a list of all products
+            description: Returns a list of all products in API
+components:
+    schemas:
+        error:
+            title: Root Type for errir
+            description: ''
+            type: object
+            properties:
+                Error:
+                    type: string
+            example:
+                Error: Error message
+        product:
+            description: ''
+            type: object
+        user:
+            description: ''
+            type: object
+tags:
+    -
+        name: products
+        description: ''
