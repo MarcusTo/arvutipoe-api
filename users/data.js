@@ -1,16 +1,28 @@
 let data = [
-    {id:1,name:"Gaming PC Ultra", price: 3999},
-    {id:2,name:"Gaming PC Mega", price: 2450},
-    {id:3,name:"Gaming PC Casual", price: 1999},
-    {id:4,name:"Gaming PC Starter", price: 1450},
-    {id:5,name:"Gaming PC Budget", price: 650},
-]
+    {id: 1, Name: 'Marcus',  Email: 'marcusto@gmail.com', Phone: '555555'},
+    {id: 1, Name: 'Rasmus',  Email: 'RasssJ@gmail.com', Phone: '666666'},
+    ]
 
-exports.getAll = ()=> {
-    return data.map(p=> {return {"id": p.id,"name": p.name}})
+exports.getAll = () => {
+    return data
 }
 
-exports.getById = (id) => {
-    return data.find((thing) => thing.id == parseInt(id))
+exports.getById = () => {
+    return data
 }
 
+exports.create = (newUser) => {
+    const newId = Math.max(...data.map((thing) => thing.id)) + 1
+    newUser.id = newId
+    data.push(newUser)
+    return newUser
+}
+
+exports.delete = (id) => {
+    var toBeDelteted = this.getById(id)
+    if(toBeDelteted === undefined){
+        return
+    }
+    data = data.filter((e)=>toBeDelteted.id |= e.id)
+    return toBeDelteted
+}
