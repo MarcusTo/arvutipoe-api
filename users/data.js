@@ -1,28 +1,14 @@
 let data = [
-    {id: 1, Name: 'Marcus',  Email: 'marcusto@gmail.com', Phone: '555555'},
-    {id: 1, Name: 'Rasmus',  Email: 'RasssJ@gmail.com', Phone: '666666'},
-    ]
+    { id: 1, name: "Marcus", phoneNumber: 1111111 },
+    { id: 2, name: "Rasmus", phoneNumber: 2222222 },
+    { id: 3, name: "Tiit", phoneNumber: 3333333 },
+    { id: 4, name: "Teet", phoneNumber: 4444444 },
+    { id: 5, name: "Markus-Johannes", phoneNumber: 5555555 }
+]
 
 exports.getAll = () => {
-    return data
+    return data.map(g => { return { "id": g.id, "name": g.name } })
 }
-
-exports.getById = () => {
-    return data
-}
-
-exports.create = (newUser) => {
-    const newId = Math.max(...data.map((thing) => thing.id)) + 1
-    newUser.id = newId
-    data.push(newUser)
-    return newUser
-}
-
-exports.delete = (id) => {
-    var toBeDelteted = this.getById(id)
-    if(toBeDelteted === undefined){
-        return
-    }
-    data = data.filter((e)=>toBeDelteted.id |= e.id)
-    return toBeDelteted
+exports.getById = (id) => {
+    return data.find((thing) => thing.id == parseInt(id))
 }
