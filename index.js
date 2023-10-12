@@ -1,43 +1,16 @@
-const app = require("express")()
-require("dotenv").config()
-const port = process.env.DB_PORT
+const express = require("express")
+const app = express()
+const port = 8080
 const swaggerui = require("swagger-ui-express")
-const swaggerDocument = require("./docs/swagger.yaml")
-const products = require("./products/data")
-const users = require("./users/data")
-const {Sequelize} = require("sequelize")
-const sequelize = new Sequelize(process.env.DATABASE, process.env.DB_USER, 
-    process.env.DB_PASS, process.env.DB_HOST,'marcustoman21.thkit.ee ', 'd123442sa470150', 'p92PMBP4TtLtw972bc', {
-    host: 'localhost',
-    dialect: "mariadb"
-  });
+const yamljs = require("yamljs")
+const swaggerDocument = yamljs.load("./docs/swagger.yaml")
 
-  try {
-    await sequelize.authenticate().then (() => {
-        console.log('Connection has been established successfully.');
-    });
-  } catch (error) {
-    console.error('Unable to connect to the database:', error);
-  }
+app.use(express.json())
+app.use("/docs", swaggerui.serve, swaggerui.setup(swaggerDocument))
 
-app.use("/docs",swaggerui.serve,swaggerui.setup(swaggerDocument))
+require("./routes/productRoutes")(app)
+require("./routes/userRoutes")(app)
 
-app.get("/products", (req,res)=>{
-    res.send(products.getAll())
-})
-app.get("/products/:id", (req,res)=>{
-    const foundThing = products.getById(req.params.id)
-    if (foundThing === undefined) {
-       return res.status(404).send({ error: "Widget not found" }) 
-    }
-    res.send(foundThing)
-})
-
-app.get("/products", (req,res)=>{
-    res.send(products.getAll())
-})
-
-
-app.listen(port, ()=> {
-    console.log(`API up at: http://localhost:${port}`)
+app.listen(port, () => {
+    console.log(`API up at: http://localhost:${port}`);
 })
