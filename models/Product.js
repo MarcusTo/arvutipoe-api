@@ -13,5 +13,5 @@ module.exports = (dbConnection, Sequelize) => {
             type: Sequelize.DECIMAL
         }
     })
-    return Game
+    return Product
 }
