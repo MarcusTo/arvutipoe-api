@@ -17,11 +17,18 @@ try {
 const db = {}
 db.Sequelize = Sequelize
 db.connection = sequelize
+db.users = require("./models/User")(sequelize, Sequelize)
 db.products = require("./models/Product")(sequelize, Sequelize)
+db.ProductBuyers = require("./models/ProductBuyers.js")(sequelize, Sequelize)
+
+db.users.hasMany(db.users,{through: db.ProductBuyers})
+db.products.belongsToMany(db.products,{through: db.ProductBuyers})
+db.products.hasMany(db.ProductBuyers)
+db.users.hasMany(db.ProductBuyers)
 
 sync = async () => {
-    await sequelize.sync({ force: true }) // Erase all and recreate
-    //await sequelize.sync({alter:true}) // Alter existing to match the model
+    // await sequelize.sync({ force: true }) // Erase all and recreate
+    await sequelize.sync({alter:true}) // Alter existing to match the model
 }
 
 module.exports = { db, sync }
