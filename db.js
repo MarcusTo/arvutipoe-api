@@ -19,12 +19,15 @@ db.Sequelize = Sequelize
 db.connection = sequelize
 db.users = require("./models/User")(sequelize, Sequelize)
 db.products = require("./models/Product")(sequelize, Sequelize)
-db.ProductBuyers = require("./models/ProductBuyers.js")(sequelize, Sequelize)
+db.ProductBuyers = require("./models/ProductBuyers")(sequelize, Sequelize, db.products, db.users)
 
-db.users.hasMany(db.users,{through: db.ProductBuyers})
-db.products.belongsToMany(db.products,{through: db.ProductBuyers})
+db.ProductBuyers = require("./models/ProductBuyers")(sequelize, Sequelize, db.products, db.users)
+db.products.belongsToMany(db.users, { through: db.ProductBuyers })
+db.users.belongsToMany(db.products, { through: db.ProductBuyers })
 db.products.hasMany(db.ProductBuyers)
 db.users.hasMany(db.ProductBuyers)
+db.ProductBuyers.belongsTo(db.products)
+db.ProductBuyers.belongsTo(db.users)
 
 sync = async () => {
     // await sequelize.sync({ force: true }) // Erase all and recreate

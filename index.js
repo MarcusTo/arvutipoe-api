@@ -11,10 +11,11 @@ app.use("/docs", swaggerui.serve, swaggerui.setup(swaggerDocument))
 
 require("./routes/productRoutes")(app)
 require("./routes/userRoutes")(app)
+require("./routes/productBuyersRoutes")(app)
 
 app.listen(port, () => {
     require("./db").sync()
         .then(console.log("Synchronized"))
         .catch((error) => console.log("Error:", error))
-    console.log(`API up at: http://localhost:${port}`);
+    console.log(`API up at: http://localhost:${port}/docs`);
 })

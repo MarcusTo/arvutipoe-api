@@ -12,11 +12,17 @@ module.exports = (dbConnection, Sequelize) => {
         email: {
             type: Sequelize.STRING
         },
-        phone: {
-            type: Sequelize.INTEGER,
-            allowNull: false
-            
+        price: {
+            type: Sequelize.DECIMAL,
         }
+        // BuyerId:{
+        //     type: Sequelize.INTEGER,
+        //     allowNull: false,
+        //     references: {
+        //         model: Product,
+        //         key: "id"
+        //     }
+        // }
     })
     return ProductBuyers
 }

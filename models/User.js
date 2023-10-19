@@ -15,7 +15,15 @@ module.exports = (dbConnection, Sequelize) => {
         phone: {
             type: Sequelize.INTEGER
             
-        }
+        },
+        // UserId:{
+        //     type: Sequelize.INTEGER,
+        //     allowNull: false,
+        //     references: {
+        //         model: Product,
+        //         key: "id"
+        //     }
+        // }
     })
     return User
 }
