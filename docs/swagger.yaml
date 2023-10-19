@@ -38,7 +38,7 @@ info:
 
         | 5XX| A server error has occurred while processing the request.
 paths:
-    '/orders{ID}':
+    '/orders/{ID}':
         get:
             tags:
                 - orders
@@ -58,50 +58,51 @@ paths:
                     description: Returns order information
                 '404':
                     description: Order not found
+                '500':
+                    description: 'Iternal Server Error, Try Again Later'
             summary: Get a list of all ORDERS
             description: |+
                 RETURNS a list of all ORDERS
 
-        post:
+        put:
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: array
+                            items:
+                                type: string
+                        examples:
+                            New order:
+                                value: '{orderid: 2, productid: 3, productamount: 1, price: 200}'
+                required: true
+            tags:
+                - orders
             responses:
                 '200':
-                    description: Order created
-                '400':
-                    description: Error creating order
-            summary: Create an order
+                    description: Order has been updated.
+                '500':
+                    description: 'Iternal Server Error, try Again Later'
+            summary: Update order information.
         delete:
+            tags:
+                - orders
             responses:
                 '200':
                     description: Order deleted.
-                '400':
-                    description: Error deleting order
-                '401':
-                    description: Unauthorized to delete order
             summary: Delete an order
         parameters:
             -
                 name: ID
                 in: path
                 required: true
-    '/products{ID}':
+    '/products/{ID}':
         description: ''
         get:
             tags:
                 - products
             responses:
                 '200':
-                    content:
-                        application/json:
-                            schema:
-                                type: array
-                                items:
-                                    type: string
-                            examples:
-                                Single product:
-                                    value: |-
-                                        [
-                                            {id:1,name:"Gaming PC Ultra", price: 3999}
-                                        ]
                     description: Returns a list and information of requested products
                 '404':
                     content:
@@ -113,33 +114,75 @@ paths:
                                     value:
                                         Error: Product not found
                     description: Product not found.
+                '500':
+                    description: 'Iternal Server Error, Try Again Later'
             summary: Get a list of all PRODUCTS
             description: |
-                Identifier of product
-        post:
+                Returns information about product
+        put:
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: array
+                            items:
+                                type: string
+                        examples:
+                            New product:
+                                value: '{productid:15, name:"SuperDuperMega PC", price:"999"}'
+                required: true
+            tags:
+                - products
             responses:
                 '200':
-                    description: Product has been created
-                '400':
-                    description: Error creating product
-                '401':
-                    description: Not authorized to create a new product
-            summary: Create product
+                    description: Product information has been updated.
+                '500':
+                    description: 'Iternal Server Error, try Again Later'
+            summary: Updates product information
         delete:
+            tags:
+                - products
             responses:
-                '200':
-                    description: Product has been deleted
-                '400':
-                    description: Error deleting product
-                '401':
-                    description: Unauthorized to delete product
+                '204':
+                    description: |
+                        Deleted
             summary: Delete product
         parameters:
             -
                 name: ID
                 in: path
                 required: true
-    '/user{ID}':
+    /products:
+        get:
+            tags:
+                - products
+            responses:
+                '200':
+                    description: Returns a list of products.
+                '404':
+                    description: |
+                        Product not found
+                '500':
+                    description: 'Iternal Server Error, Try Again Later.'
+            summary: Get a product
+            description: |
+                Returns a list of product
+        post:
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/product'
+                required: true
+            tags:
+                - products
+            responses:
+                '200':
+                    description: Product has been created.
+                '500':
+                    description: 'Iternal Server Error, try Again Later'
+            summary: Create a new product
+    /users:
         get:
             tags:
                 - users
@@ -147,17 +190,66 @@ paths:
                 '200':
                     description: Returns user information
                 '400':
-                    description: Error getting user inforation
-            summary: Get info about an user
-            description: Returns information about an user
+                    description: user not found
+                '500':
+                    description: 'Iternal Server Error, Try Again Later'
+            summary: Get a list of user
+            description: |
+                Returns information about an user
         post:
+            requestBody:
+                required: false
+            tags:
+                - users
             responses:
                 '200':
                     description: User has been created
-                '400':
-                    description: Error creating user
+                '500':
+                    description: >-
+                        Server encountered an unexpected condition that prevented it from fulfilling the
+                        request.
             summary: Create user
+    '/users/{ID}':
+        get:
+            tags:
+                - users
+            responses:
+                '200':
+                    content:
+                        application/json: {}
+                    description: Returns user information
+                '400':
+                    description: Error getting user information
+                '500':
+                    description: 'Iternal Server Error, Try Again Later'
+            summary: Get a list of all users
+            description: |
+                Returns information about all users
+        put:
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: array
+                            items:
+                                type: string
+                        examples:
+                            New Product:
+                                value: '{userid:4, name: "RassssJ", email: "RasmusJ@gmail.com", phone:"555555"}'
+                required: true
+            tags:
+                - users
+            responses:
+                '200':
+                    content:
+                        application/json: {}
+                    description: User information has been updated.
+                '500':
+                    description: 'Iternal Server Error, try Again Later'
+            summary: Update user information
         delete:
+            tags:
+                - users
             responses:
                 '200':
                     description: User has been deleted
@@ -171,7 +263,57 @@ paths:
                 name: ID
                 in: path
                 required: true
-    '/invoices{ID}':
+    /orders:
+        get:
+            tags:
+                - orders
+            responses:
+                '200':
+                    description: Returns order information
+                '404':
+                    description: Order not found
+                '500':
+                    description: 'Iternal Server Error, Try Again Later'
+            summary: Return information of an order.
+            description: Returns a list of order
+        post:
+            tags:
+                - orders
+            responses:
+                '200':
+                    description: Order has been created.
+                '500':
+                    description: 'Iternal Server Error, try Again Later'
+            summary: Create an order
+    /invoices:
+        get:
+            tags:
+                - invoices
+            responses:
+                '200':
+                    description: Returns a list of invoices
+                '404':
+                    description: Invoice not found.
+                '500':
+                    description: 'Iternal Server Error, Try Again Later'
+            summary: Get a list of invoice
+            description: Returns a list of invoice
+        post:
+            requestBody:
+                content:
+                    application/json: {}
+                required: true
+            tags:
+                - invoices
+            responses:
+                '200':
+                    description: Creates and invoice.
+                '404':
+                    description: Invoice not found
+                '500':
+                    description: 'Internal server error, try again later.'
+            summary: Creates an invoice
+    '/invoices/{ID}':
         get:
             tags:
                 - invoices
@@ -195,16 +337,35 @@ paths:
                     description: Returns the information of an invoice
                 '404':
                     description: Invoice not found
+                '500':
+                    description: 'Iternal Server Error, Try Again Later'
             summary: Get a list of all INVOICES
             description: RETURNS a list of all INVOICES
-        post:
+        put:
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: array
+                            items:
+                                type: string
+                        examples:
+                            Invoice:
+                                value: '{invoiceid: 1, orderid: 2, userid: 3, descrption: ''HUH?''}'
+                required: true
+            tags:
+                - invoices
             responses:
                 '200':
-                    description: Invoice has been created
-                '400':
-                    description: Error creating invoice
-            summary: Create an invoice
+                    description: |
+                        Returns a list of invoices
+                '404':
+                    description: Invoice not found
+                '500':
+                    description: Internal Server Error. Try Again Later
         delete:
+            tags:
+                - invoices
             responses:
                 '200':
                     description: Invoice has been deleted
@@ -243,30 +404,56 @@ components:
                     format: int32
                     type: integer
             example:
-                id: 1
-                name: Gaming PC Ultra
-                price: 3999
+                productid: 1
+                productstock: 100
+                productname: Gaming PC Ultra
+                productprice: 3999
         user:
             title: Root Type for user
             description: ''
             type: array
             items:
                 type: string
-            example:
-                - Marcus Toman
-                - Rasmus Jalakas
-        delete:
-            title: Root Type for delete-product
-            description: ''
-            required:
-                - id
+            example: |-
+                [
+                    userid: "Marcus Toman",
+                    userid: "Rasmus Jalakas"
+                ]
+        invoice:
+            title: Root Type for invoice
+            description: Invoice with product id and invoice specific id.
             type: object
             properties:
                 id:
                     format: int32
                     type: integer
+                name:
+                    type: string
+                price:
+                    format: int32
+                    type: integer
             example:
-                id: 1
+                invoiceid: 1
+                orderid: 2
+                name: Gaming PC Ultra
+                price: 3999
+        order:
+            title: Root Type for order
+            description: ''
+            type: object
+            properties:
+                id:
+                    format: int32
+                    type: integer
+                name:
+                    type: string
+                price:
+                    format: int32
+                    type: integer
+            example:
+                orderid: 1
+                name: Gaming PC Ultra
+                price: 3999
 tags:
     -
         name: products
