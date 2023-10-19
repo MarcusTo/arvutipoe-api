@@ -1,6 +1,6 @@
 let data = [
-    {id: 1, Name: 'Marcus',  Email: 'marcusto@gmail.com', Phone: '555555'},
-    {id: 1, Name: 'Rasmus',  Email: 'RasssJ@gmail.com', Phone: '666666'},
+    {id: 1, name: 'Marcus',  email: 'marcusto@gmail.com', phone: '555555'},
+    {id: 1, name: 'Rasmus',  email: 'RasssJ@gmail.com', phone: '666666'},
     ]
 
 exports.getAll = () => {

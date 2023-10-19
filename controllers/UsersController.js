@@ -1,37 +1,51 @@
-const users = require("../users/data")
+const { db } = require("../db")
+const products = db.users
 const { getBaseurl } = require("./helpers")
 
 // CREATE
-exports.createNew = (req, res) => {
+exports.createNew = async (req, res) => {
     if (!req.body.name) {
         return res.status(400).send({ error: "Required parameter 'name' is missing" })
     }
-    const createdUser = users.create({
-        name: req.body.name
+    const createdUser = await users.create({ ...req.body }, {
+        fields: ["name", "email", "phone"]
     })
     res.status(201)
-        .location(`${getBaseurl(req)}/players/${createdUser.id}`)
+        .location(`${getBaseurl(req)}/users/${createdUser.id}`)
         .send(createdUser)
 }
 // READ
-exports.getAll = (req, res) => {
-    res.send(users.getAll())
+exports.getAll = async (req, res) => {
+    const result = await users.findAll({ attributes: ["id", "name", "email", "phone"] })
+    res.json(result)
 }
-exports.getById = (req, res) => {
-    const foundUser = users.getById(req.params.id)
-    if (foundUser === undefined) {
+exports.getById = async (req, res) => {
+    const foundUser = await users.findByPk(req.params.id)
+    if (foundUser === null) {
         return res.status(404).send({ error: `User not found` })
     }
-    res.send(foundUser)
+    res.json(foundUser)
 }
 // UPDATE
-exports.editById = (req, res) => {
-
+exports.editById = async (req, res) => {
+    const updateResult = await users.update({ ...req.body }, {
+        where: { id: req.params.id },
+        fields: ["name", "email", "phone"]
+    })
+    if (updateResult[0] == 0) {
+        return res.status(404).send({ error: "User not found" })
+    }
+    res.status(202)
+        .location(`${getBaseurl(req)}/users/${req.params.id}`)
+        .send()
 }
 // DELETE
-exports.deleteById = (req, res) => {
-    if (users.delete(req.params.id) === undefined) {
-        return res.status(404).send({ error: "Product not found" })
+exports.deleteById = async (req, res) => {
+    const deletedAmount = await users.destroy({
+        where: { id: req.params.id }
+    })
+    if (deletedAmount === 0) {
+        return res.status(404).send({ error: "User not found" })
     }
     res.status(204).send()
 }

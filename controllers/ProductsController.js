@@ -1,38 +1,51 @@
-const products = require("../products/data")
+const { db } = require("../db")
+const products = db.products
 const { getBaseurl } = require("./helpers")
 
 // CREATE
-exports.createNew = (req, res) => {
+exports.createNew = async (req, res) => {
     if (!req.body.name || !req.body.price) {
         return res.status(400).send({ error: "One or all required parameters are missing" })
     }
-    const createdProduct = products.create({
-        name: req.body.name,
-        price: req.body.price
+    const createdProduct = await products.create(req.body, {
+        fields: ["name", "price"]
     })
     res.status(201)
         .location(`${getBaseurl(req)}/products/${createdProduct.id}`)
-        .send(createdProduct)
+        .json(createdProduct)
 }
 // READ
-exports.getAll = (req, res) => {
-    res.send(products.getAll())
+exports.getAll = async (req, res) => {
+    const result = await products.findAll({ attributes: ["id", "name"] })
+    res.json(result)
 }
-exports.getById = (req, res) => {
-    const foundProduct = products.getById(req.params.id)
-    if (foundProduct === undefined) {
+exports.getById = async (req, res) => {
+    const foundProduct = await products.findByPk(req.params.id)
+    if (foundProduct === null) {
         return res.status(404).send({ error: `Product not found` })
     }
-    res.send(foundProduct)
+    res.json(foundProduct)
 }
 // UPDATE
-exports.editById = (req, res) => {
-
+exports.editById = async (req, res) => {
+    const updateResult = await products.update({ ...req.body }, {
+        where: { id: req.params.id },
+        fields: ["name", "price"]
+    })
+    if (updateResult[0] == 0) {
+        return res.status(404).send({ error: "Product not found" })
+    }
+    res.status(204)
+        .location(`${getBaseurl(req)}/products/${req.params.id}`)
+        .send()
 }
 // DELETE
-exports.deleteById = (req, res) => {
-    if (products.delete(req.params.id) === undefined) {
-        return res.status(404).send({ error: "Products not found" })
+exports.deleteById = async (req, res) => {
+    const deletedAmount = await products.destroy({
+        where: { id: req.params.id }
+    })
+    if (deletedAmount === 0) {
+        return res.status(404).send({ error: "Product not found" })
     }
     res.status(204).send()
 }
