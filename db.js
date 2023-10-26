@@ -20,6 +20,10 @@ db.connection = sequelize
 db.users = require("./models/User")(sequelize, Sequelize)
 db.products = require("./models/Product")(sequelize, Sequelize)
 db.ProductBuyers = require("./models/ProductBuyers")(sequelize, Sequelize, db.products, db.users)
+db.Invoice = require("./models/Invoice")(sequelize, Sequelize, db.orders, db.users, db.products,)
+
+
+
 
 db.ProductBuyers = require("./models/ProductBuyers")(sequelize, Sequelize, db.products, db.users)
 db.products.belongsToMany(db.users, { through: db.ProductBuyers })

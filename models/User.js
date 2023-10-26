@@ -12,7 +12,7 @@ module.exports = (dbConnection, Sequelize) => {
         email: {
             type: Sequelize.STRING
         },
-        phone: {
+        phoneNumber: {
             type: Sequelize.INTEGER
             
         },
