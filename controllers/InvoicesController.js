@@ -1,5 +1,5 @@
 const { db } = require("../db")
-const Invoice = db.invoices
+const invoice = db.invoices
 const { getBaseurl } = require("./helpers")
 
 // CREATE
@@ -30,7 +30,7 @@ exports.getById = async (req, res) => {
 exports.editById = async (req, res) => {
     const updateResult = await invoices.update({ ...req.body }, {
         where: { id: req.params.id },
-        fields: ["id", "orderId", "price","userId"]
+        fields: ["id", "orderId", "price",""]
     })
     if (updateResult[0] == 0) {
         return res.status(404).send({ error: "Invoice not found" })
