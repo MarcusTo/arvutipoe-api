@@ -1,5 +1,5 @@
 const { db } = require("../db")
-const Order = db.Orders
+const order = db.orders
 const { getBaseurl } = require("./helpers")
 
 // CREATE

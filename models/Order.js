@@ -1,4 +1,4 @@
-module.exports = (dbConnection, Sequelize, users, invoices) => {
+module.exports = (dbConnection, Sequelize, users, invoices,) => {
     const Order = dbConnection.define("Order", {
         id: {
             type: Sequelize.INTEGER,
@@ -17,6 +17,14 @@ module.exports = (dbConnection, Sequelize, users, invoices) => {
             allowNull: false,
             references: {
                 model: invoices,
+                key: "id"
+            }
+        },
+        productId:{
+            type: Sequelize.INTEGER,
+            allowNull: false,
+            references: {
+                model: products,
                 key: "id"
             }
         },

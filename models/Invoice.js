@@ -1,15 +1,10 @@
-const User = require("./User")
-
-module.exports = (dbConnection, Sequelize) => {
+const Invoice = require("./Invoice")
+module.exports = (dbConnection, Sequelize, orders, users) => {
     const Invoice = dbConnection.define("Invoice", {
         id: {
             type: Sequelize.INTEGER,
             primaryKey: true,
             autoIncrement: true
-        },
-        orderId: {
-            type: Sequelize.DECIMAL,
-            allowNull: false
         },
         price: {
             type: Sequelize.DECIMAL,
@@ -18,7 +13,15 @@ module.exports = (dbConnection, Sequelize) => {
             type: Sequelize.INTEGER,
             allowNull: false,
             references: {
-                model: User,
+                model: users,
+                key: "id"
+            }
+        },
+        OrderId:{
+            type: Sequelize.INTEGER,
+            allowNull: false,
+            references: {
+                model: orders,
                 key: "id"
             }
         }
