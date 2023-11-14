@@ -47,13 +47,17 @@ paths:
                     content:
                         application/json:
                             schema:
-                                type: string
+                                type: array
+                                items:
+                                    type: string
                             examples:
-                                Get a list of all orders:
+                                Single Order:
                                     value: |-
                                         [
-                                            {orderID:1, ProductID:8, ]}
-                                            {orderID:4, ProductID:9]}
+                                            "id":1,
+                                            "orderId":2,
+                                            "price":600,
+                                            "userId":3
                                         ]
                     description: Returns order information
                 '404':
@@ -64,7 +68,7 @@ paths:
                             examples:
                                 Not Found:
                                     value:
-                                        Error: Order not found!
+                                        error: Order not found!
                     description: Order not found
                 '500':
                     content:
@@ -74,9 +78,9 @@ paths:
                             examples:
                                 Not Found:
                                     value:
-                                        Error: Internal Server Error
+                                        error: Internal Server Error
                     description: 'Iternal Server Error, Try Again Later'
-            summary: Get Order
+            summary: Returns information of an order.
             description: |
                 Get a single order
         put:
@@ -94,7 +98,7 @@ paths:
             tags:
                 - orders
             responses:
-                '200':
+                '204':
                     content:
                         application/json:
                             schema:
@@ -102,9 +106,10 @@ paths:
                             examples:
                                 newOrder:
                                     value:
-                                        id: 64
-                                        name: some text
-                                        price: 79
+                                        id: 1
+                                        orderId: 2
+                                        price: 600
+                                        userId: 3
                     description: Order has been updated.
                 '404':
                     content:
@@ -114,7 +119,7 @@ paths:
                             examples:
                                 Not Found:
                                     value:
-                                        Error: Order Not Found
+                                        error: Order Not Found
                     description: Not Found
                 '500':
                     content:
@@ -124,18 +129,15 @@ paths:
                             examples:
                                 Update error:
                                     value:
-                                        Error: Error updating order information.
+                                        error: Error updating order information.
                     description: 'Iternal Server Error, try Again Later'
-            summary: Update order information.
+            summary: Update order.
+            description: Updates order information.
         delete:
             tags:
                 - orders
             responses:
-                '200':
-                    content:
-                        application/json:
-                            schema:
-                                type: string
+                '204':
                     description: Succeeded
                 '404':
                     content:
@@ -145,14 +147,25 @@ paths:
                             examples:
                                 Not Found:
                                     value:
-                                        Error: Order Not Found
+                                        error: Order Not Found
                     description: Order Not Found
-            summary: Delete an order
+                '500':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
+                            examples:
+                                error:
+                                    value:
+                                        error: Iternal server error
+                    description: "\r\nInternal server error."
+            summary: Delete  order
+            description: Deletes an exsisting order.
         parameters:
             -
                 name: ID
                 schema:
-                    type: number
+                    type: integer
                 in: path
                 required: true
     '/products/{ID}':
@@ -160,21 +173,26 @@ paths:
         get:
             tags:
                 - products
+            parameters:
+                -
+                    name: ID
+                    description: ID
+                    schema:
+                        type: integer
+                    in: path
+                    required: true
             responses:
                 '200':
                     content:
                         application/json:
                             schema:
-                                type: array
-                                items:
-                                    $ref: '#/components/schemas/product'
+                                $ref: '#/components/schemas/product'
                             examples:
-                                Single Product:
+                                Single product:
                                     value:
-                                        -
-                                            id: 82
-                                            name: Product Test
-                                            price: 24
+                                        name: Testikas
+                                        id: 42
+                                        price: 900
                     description: Returns information of requested product
                 '404':
                     content:
@@ -196,15 +214,17 @@ paths:
                                     value:
                                         Error: Product Not Found
                     description: 'Iternal Server Error, Try Again Later'
-            summary: Get a product
+            summary: Returns information of a product.
             description: |
-                Returns information about product
+                Get a single product.
         put:
             requestBody:
                 content:
                     application/json:
                         schema:
-                            $ref: '#/components/schemas/product'
+                            type: array
+                            items:
+                                type: string
                         examples:
                             Updated Product:
                                 value:
@@ -214,20 +234,20 @@ paths:
                 required: true
             tags:
                 - products
+            parameters:
+                -
+                    name: ID
+                    description: ID
+                    schema:
+                        type: integer
+                    in: path
+                    required: true
             responses:
-                '200':
+                '204':
                     content:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/product'
-                            examples:
-                                Updated Product:
-                                    value: |-
-                                        [
-                                            "id": 55,
-                                            "name": "New Product",
-                                            "price": 42,69
-                                        ]
                     description: Product information has been updated.
                 '404':
                     content:
@@ -249,13 +269,14 @@ paths:
                                     value:
                                         Error: Internal Server Error
                     description: 'Iternal Server Error, try Again Later'
-            summary: Updates product information
+            summary: Update product
+            description: Updates product information.
         delete:
             tags:
                 - products
             responses:
-                '200':
-                    description: Product has been deleted!
+                '204':
+                    description: Product has been deleted
                 '404':
                     content:
                         application/json:
@@ -266,12 +287,16 @@ paths:
                                     value:
                                         Error: Product Not Found Or Already Deleted
                     description: Product Not Found
+                '500':
+                    description: "\r\nInternal server error."
             summary: Delete product
+            description: Deletes an exsisting product.
         parameters:
             -
                 name: ID
+                description: ID
                 schema:
-                    type: number
+                    type: integer
                 in: path
                 required: true
     /products:
@@ -285,41 +310,13 @@ paths:
                             schema:
                                 type: array
                                 items:
-                                    $ref: '#/components/schemas/product'
+                                    type: string
                             examples:
                                 List of all Products:
-                                    value:
-                                        -
-                                            id: 98
-                                            name: Ultra Mega Gaming PC
-                                            price: 1400
-                                        -
-                                            id: 18
-                                            name: One & Only
-                                            price: 1955
-                    description: Returns a list and information of requested products
-                '404':
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/error'
-                            examples:
-                                Not Found:
-                                    value:
-                                        Error: Product not found.
+                                    value: []
                     description: |
-                        Product not found
-                '500':
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/error'
-                            examples:
-                                Server error:
-                                    value:
-                                        Error: Internal server error.
-                    description: 'Internal Server Error, Try Again Later.'
-            summary: Returns a list and information of requested products
+                        Returns a list of products.
+            summary: Get a list of products.
             description: |
                 Returns a list of products
         post:
@@ -329,40 +326,36 @@ paths:
                         schema:
                             $ref: '#/components/schemas/product'
                         examples:
-                            NewProduct:
+                            addProduct:
                                 value:
-                                    id: 80
-                                    name: some text
-                                    price: 93
+                                    id: '4'
+                                    name: PcOneOfOne
+                                    price: 2000
                 required: true
             tags:
                 - products
             responses:
-                '200':
+                '201':
                     content:
                         application/json:
                             schema:
-                                type: array
-                                items:
-                                    $ref: '#/components/schemas/product'
+                                $ref: '#/components/schemas/product'
                             examples:
                                 CreatedProduct:
                                     value:
-                                        -
-                                            id: 12
-                                            name: some text
-                                            price: 50
-                    description: Product has been created.
-                '404':
+                                        name: Testikas
+                                        price: 599
+                    description: "\r\nProduct has been created."
+                '400':
                     content:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/error'
                             examples:
-                                Not Found:
+                                Not found:
                                     value:
                                         Error: Product Not Found
-                    description: Error finding a product
+                    description: "\r\nError finding a product"
                 '500':
                     content:
                         application/json:
@@ -373,7 +366,8 @@ paths:
                                     value:
                                         Error: Product Not Found
                     description: 'Iternal Server Error, try Again Later'
-            summary: Create a new product
+            summary: Create product
+            description: Creates a new product
     /users:
         get:
             tags:
@@ -383,63 +377,33 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/user'
+                                type: array
+                                items:
+                                    type: string
                             examples:
                                 List Of All Users:
-                                    value:
-                                        -
-                                            id: 1
-                                            name: Marcus Toman
-                                            phoneNumber: 555555
-                                        -
-                                            id: 2
-                                            name: Rasmus Jalakas
-                                            phoneNumber: 66666
-                    description: Get a list of all Players
-                '400':
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/error'
-                            examples:
-                                Not Found:
-                                    value:
-                                        Error: User Not Found
-                    description: user not found
-                '500':
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/error'
-                            examples:
-                                Server error:
-                                    value:
-                                        Error: 'Internal server error, please try again later.'
-                    description: 'Iternal Server Error, Try Again Later'
-            summary: Get a list of user
+                                    value: []
+                    description: Returns a list of users
+            summary: Get a list of users.
             description: |
-                Returns a list of all users
+                Returns a list of users
         post:
             requestBody:
                 content:
                     application/json:
                         schema:
-                            type: array
-                            items:
-                                type: string
+                            $ref: '#/components/schemas/user'
                         examples:
                             AddUser:
-                                value: |-
-                                    {
-                                        "id": 5,
-                                        "name": "Marcus Toman",
-                                        "email":"test.test@gmail.com"
-                                        "phoneNumber": 999999
-                                    }
+                                value:
+                                    email: some text
+                                    name: some text
+                                    phoneNumber: 99
+                required: true
             tags:
                 - users
             responses:
-                '200':
+                '201':
                     content:
                         application/json:
                             schema:
@@ -447,10 +411,21 @@ paths:
                             examples:
                                 NewUser:
                                     value:
-                                        id: 7
-                                        name: Marcus
-                                        phoneNumber: 999999
+                                        id: 60
+                                        email: some text
+                                        name: some text
+                                        phoneNumber: 98
                     description: User has been created
+                '400':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
+                            examples:
+                                error:
+                                    value:
+                                        Error: Missing one or all parameters
+                    description: One or all parameters are missing
                 '500':
                     content:
                         application/json:
@@ -463,8 +438,8 @@ paths:
                     description: >-
                         Server encountered an unexpected condition that prevented it from fulfilling the
                         request.
-            summary: Creates a new instance of a User
-            description: A new User to be created
+            summary: Create user
+            description: Creates a new user
     '/users/{ID}':
         get:
             tags:
@@ -478,12 +453,13 @@ paths:
                             examples:
                                 Single User:
                                     value:
-                                        id: 7
-                                        email: some text
-                                        name: some text
-                                        phoneNumber: 89
-                    description: Returns user information
-                '400':
+                                        -
+                                            id: 95
+                                            email: mtoman@gmail.com
+                                            name: MarcusT
+                                            phoneNumber: 5555555
+                    description: Returns information of an user.
+                '404':
                     content:
                         application/json:
                             schema:
@@ -503,7 +479,7 @@ paths:
                                     value:
                                         Error: Error getting user details.
                     description: 'Iternal Server Error, Try Again Later'
-            summary: Get user details.
+            summary: Returns information of an user.
             description: Get a single user
         put:
             requestBody:
@@ -523,20 +499,7 @@ paths:
             tags:
                 - users
             responses:
-                '200':
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/user'
-                            examples:
-                                Single User:
-                                    value:
-                                        id: 55
-                                        email: Arvutipood@gmail.com
-                                        name: Arvuti Pood
-                                        phoneNumber: 63
-                    description: User information has been updated.
-                '404':
+                '202':
                     content:
                         application/json:
                             schema:
@@ -545,30 +508,7 @@ paths:
                                 Not Found:
                                     value:
                                         Error: User Not Found
-                    description: Not Found
-                '500':
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/error'
-                            examples:
-                                Not Found:
-                                    value:
-                                        Error: User Not Found
-                    description: 'Iternal Server Error, try Again Later'
-            summary: Updates an existing User
-        delete:
-            tags:
-                - users
-            responses:
-                '200':
-                    content:
-                        application/json:
-                            schema:
-                                type: array
-                                items:
-                                    type: string
-                    description: Succeeded
+                    description: User info has been updated
                 '404':
                     content:
                         application/json:
@@ -579,12 +519,52 @@ paths:
                                     value:
                                         Error: User Not Found
                     description: User Not Found
-            summary: Deletes an existing User
+                '500':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
+                            examples:
+                                Not Found:
+                                    value:
+                                        Error: User Not Found
+                    description: 'Iternal Server Error, try Again Later'
+            summary: Update user
+            description: Updates user information.
+        delete:
+            tags:
+                - users
+            parameters:
+                -
+                    name: ID
+                    description: ID
+                    schema:
+                        type: integer
+                    in: path
+                    required: true
+            responses:
+                '204':
+                    description: User has been deleted
+                '404':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
+                            examples:
+                                Not Found:
+                                    value:
+                                        Error: User Not Found
+                    description: User Not Found
+                '500':
+                    description: "\r\nInternal server error."
+            summary: Delete user
+            description: Deletes an exsisting user.
         parameters:
             -
                 name: ID
+                description: ID
                 schema:
-                    type: number
+                    type: integer
                 in: path
                 required: true
     /orders:
@@ -596,33 +576,15 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/order'
+                                type: array
+                                items:
+                                    type: string
                             examples:
-                                List Of All Orders:
-                                    value: "[\r\n  {\r\n    \"orderId\": 1,\r\n    \"id\": 2\r\n    \"productId\": 3\r\n    \"productAmount\": 4\r\n    \"invoiceId\": 5\r\n    \"productName\": \"SuperMegaDuperPc\"\r\n    \"price\": 666\r\n    \r\n    \r\n  },\r\n  {\r\n    \"orderId\": 6,\r\n    \"id\": 7\r\n    \"productId\": 8\r\n    \"productAmount\": 9\r\n    \"invoiceId\": 10\r\n    \"productName\":\"Ultra Gaming Pc\"\r\n    \"price\": 6699\r\n  }\r\n]"
-                    description: Returns order information
-                '404':
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/error'
-                            examples:
-                                Not Found:
-                                    value:
-                                        Error: Order not found!
-                    description: Order not found
-                '500':
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/error'
-                            examples:
-                                Server error:
-                                    value:
-                                        Error: Internal server error.
-                    description: 'Iternal Server Error, Try Again Later'
-            summary: Return information of an order.
-            description: Returns a list of order
+                                Empty Array:
+                                    value: []
+                    description: Returns a list of orders
+            summary: Get a list of orders.
+            description: Returns a list of orders
         post:
             requestBody:
                 content:
@@ -637,10 +599,11 @@ paths:
                                     productAmount: 81
                                     invoiceId: 45
                                     price: 16
+                required: true
             tags:
                 - orders
             responses:
-                '200':
+                '201':
                     content:
                         application/json:
                             schema:
@@ -648,13 +611,13 @@ paths:
                             examples:
                                 newOrder:
                                     value:
-                                        Id: 73
+                                        id: 73
                                         productId: 94
                                         productAmount: 7
                                         invoiceId: 74
                                         price: 45
                     description: Order has been created.
-                '404':
+                '400':
                     content:
                         application/json:
                             schema:
@@ -662,7 +625,7 @@ paths:
                             examples:
                                 Not Found:
                                     value:
-                                        Error: 'Order not found! :('
+                                        error: Order not found
                     description: Order not found!
                 '500':
                     content:
@@ -672,101 +635,12 @@ paths:
                             examples:
                                 Internal server error.:
                                     value:
-                                        Error: Internal server error!
+                                        error: Internal server error!
                     description: 'Iternal Server Error, try Again Later'
-            summary: Create an order
+            summary: Create order
+            description: |
+                Creates a new order
     /invoices:
-        get:
-            tags:
-                - invoices
-            responses:
-                '200':
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/invoice'
-                            examples:
-                                Get a list of all invoices:
-                                    value:
-                                        id: 73
-                                        price: 4000
-                                        orderId: 12
-                                        userid: '66'
-                    description: Returns a list of invoices
-                '404':
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/error'
-                            examples:
-                                Not Found:
-                                    value:
-                                        Error: Internal Server Error
-                    description: Invoice not found.
-                '500':
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/error'
-                            examples:
-                                Not Found:
-                                    value:
-                                        Error: Invoice Not Found
-                    description: 'Iternal Server Error, Try Again Later'
-            summary: Get a list of invoice
-            description: Returns a list of invoice
-        post:
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: '#/components/schemas/invoice'
-                        examples:
-                            addInvoice:
-                                value:
-                                    id: 17
-                                    price: 3000
-                                    orderId: 52
-                                    userid: 87
-                required: true
-            tags:
-                - invoices
-            responses:
-                '200':
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/invoice'
-                            examples:
-                                AddInvoice:
-                                    value:
-                                        id: 38
-                                        price: 5900
-                                        orderId: 86
-                                        userid: 60
-                    description: Creates and invoice.
-                '404':
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/error'
-                            examples:
-                                Not Found:
-                                    value:
-                                        Error: Invoice Not Found
-                    description: Invoice not found
-                '500':
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/error'
-                            examples:
-                                Not Found:
-                                    value:
-                                        Error: Internal Server Error
-                    description: 'Internal server error, try again later.'
-            summary: Creates an invoice
-    '/invoices/{ID}':
         get:
             tags:
                 - invoices
@@ -780,14 +654,87 @@ paths:
                                     type: string
                             examples:
                                 Get a list of all invoices:
-                                    value: |-
-                                        [
-                                            [
-                                            {orderID:1, clientID:2, invoiceID: 3,description:["Intel® Core™ i5-13600KF","GIGABYTE B760 GAMING","GeForce RTX™ 4060 8GB","16GB DDR5","1000 GB HDD"]},
-                                            {orderID:4, clientID:5, invoiceID: 6,description:["Intel Core i5-12400F","GIGABYTE H610","GeForce RTX™ 4060 8GB","16GB DDR5","1000 GB HDD"]}
-                                        ]
-                                        ]
-                    description: Returns the information of an invoice
+                                    value: []
+                    description: Returns a list of invoices
+            summary: Get a list of invoices.
+            description: Returns a list of invoices
+        post:
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/invoice'
+                        examples:
+                            addInvoice:
+                                value:
+                                    price: 3000
+                                    orderId: 52
+                                    userid: 87
+                required: true
+            tags:
+                - invoices
+            responses:
+                '201':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/invoice'
+                            examples:
+                                CreatedInvoice:
+                                    value:
+                                        id: 24
+                                        price: 79
+                                        orderId: 1
+                                        userid: 97
+                    description: |
+                        Invoice has been created
+                '400':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
+                    description: Invoice not found.
+                '500':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
+                            examples:
+                                Not Found:
+                                    value:
+                                        Error: Internal Server Error
+                    description: 'Internal server error, try again later.'
+            summary: Create invoice
+            description: Creates a new invoice
+    '/invoices/{ID}':
+        get:
+            tags:
+                - invoices
+            parameters:
+                -
+                    name: ID
+                    description: ID
+                    schema:
+                        type: integer
+                    in: path
+                    required: true
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/invoice'
+                            examples:
+                                Single Invoice:
+                                    value:
+                                        -
+                                            id: 31
+                                            price: 44
+                                            orderId: 90
+                                            userid: 24
+                    description: Returns information of requested product.
                 '404':
                     content:
                         application/json:
@@ -808,7 +755,7 @@ paths:
                                     value:
                                         Error: Invoice Not Found
                     description: 'Iternal Server Error, Try Again Later'
-            summary: Get Order
+            summary: Returns information of an invoice.
             description: Get a single invoice
         put:
             requestBody:
@@ -823,13 +770,15 @@ paths:
                                     price: 64
                                     orderId: 68
                                     userid: 99
+                required: true
             tags:
                 - invoices
             parameters:
                 -
                     name: ID
+                    description: ID
                     schema:
-                        type: number
+                        type: integer
                     in: path
                     required: true
             responses:
@@ -867,15 +816,13 @@ paths:
                                     value:
                                         Error: Internal Server Error
                     description: Internal Server Error. Try Again Later
+            summary: Update invoice.
+            description: Updates invoice information.
         delete:
             tags:
                 - invoices
             responses:
-                '200':
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/invoice'
+                '204':
                     description: Invoice has been deleted
                 '404':
                     content:
@@ -897,12 +844,14 @@ paths:
                                     value:
                                         Error: Internal server error.
                     description: Internal server error.
-            summary: Delete an invoice
+            summary: Delete invoice
+            description: Deletes an exsisting invoice.
         parameters:
             -
                 name: ID
+                description: id
                 schema:
-                    type: number
+                    type: integer
                 in: path
                 required: true
 components:
@@ -912,10 +861,10 @@ components:
             description: ''
             type: object
             properties:
-                Error:
+                error:
                     type: string
             example:
-                Error: 'Error getting information, please try again later.'
+                error: 'Error getting information, please try again later.'
         product:
             title: Root Type for product
             description: ''
@@ -965,11 +914,6 @@ components:
             required: []
             type: object
             properties:
-                Id:
-                    format: int32
-                    description: OrderId
-                    type: integer
-                    example: ''
                 productId:
                     format: int32
                     description: ''
@@ -986,6 +930,11 @@ components:
                 price:
                     format: int32
                     description: Product Price
+                    type: integer
+                    example: ''
+                id:
+                    format: int32
+                    description: OrderId
                     type: integer
                     example: ''
             example:
@@ -1013,10 +962,10 @@ components:
                     description: ''
                     type: integer
             example:
-                id: 1
-                email: Arvutipood@gmail.com
-                name: Rasmus
-                phoneNumber: 5855555
+                id: 33
+                email: some text
+                name: some text
+                phoneNumber: 75
 tags:
     -
         name: products

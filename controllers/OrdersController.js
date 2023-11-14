@@ -1,5 +1,5 @@
 const { db } = require("../db")
-const order = db.orders
+const orders = db.orders
 const { getBaseurl } = require("./helpers")
 
 // CREATE
@@ -8,7 +8,7 @@ exports.createNew = async (req, res) => {
         return res.status(400).send({ error: "Required parameter 'id' is missing" })
     }
     const createdOrder = await orders.create({ ...req.body }, {
-        fields: ["id", "invoiceId", "price", "productAmount","productId"]
+        fields: ["invoiceId", "price", "productAmount","productId"]
     })
     res.status(201)
         .location(`${getBaseurl(req)}/orders/${createdOrder.id}`)
