@@ -3,7 +3,7 @@ info:
     title: Computers-API
     version: 1.0.0
     description: >-
-        ### This is a Swagger UI for our Games API  
+        ### This is a Swagger UI for our ComputerStore API  
 
 
         ### Error handling
@@ -410,11 +410,14 @@ paths:
                                 $ref: '#/components/schemas/user'
                             examples:
                                 NewUser:
-                                    value:
-                                        id: 60
-                                        email: some text
-                                        name: some text
-                                        phoneNumber: 98
+                                    value: |4
+
+                                            {
+                                                "id": 95,
+                                                "email": "marcusto@gmail.com",
+                                                "name": "MarcusTo",
+                                                "phoneNumber": 5555555
+                                            }
                     description: User has been created
                 '400':
                     content:
@@ -455,8 +458,8 @@ paths:
                                     value:
                                         -
                                             id: 95
-                                            email: mtoman@gmail.com
-                                            name: MarcusT
+                                            email: marcusto@gmail.com
+                                            name: MarcusTo
                                             phoneNumber: 5555555
                     description: Returns information of an user.
                 '404':
@@ -626,7 +629,7 @@ paths:
                                 Not Found:
                                     value:
                                         error: Order not found
-                    description: Order not found!
+                    description: Order not found
                 '500':
                     content:
                         application/json:
