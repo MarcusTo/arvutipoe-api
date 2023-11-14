@@ -1,20 +1,5 @@
-const app = Vue.createApp({
-    data() {
-        return {
-            productInModal: { id: null, name: null, price: null },
-            products: []
-        }
-    },
-    async created() {
-        this.products = await (await fetch("http://localhost:8080/products")).json()
-    },
-    methods: {
-        getProduct: async function (id) {
-            this.productInModal = await (await fetch("http://localhost:8080/products/" + id)).json()
-            let productInfoModal = new bootstrap.Modal(document.getElementById("productInfoModal"))
-            productInfoModal.show()
-        }
-    }
-})
-
+import { createApp } from 'vue'
+import App from './App.js'
+const app = createApp(App)
+app.config.globalProperties.API_URL = 'http://localhost:8080'
 app.mount('#app')

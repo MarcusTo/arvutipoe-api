@@ -1,10 +1,10 @@
-const productsController = require("../controllers/ProductsController.js")
+const ProductsController = require("../controllers/ProductsController.js")
 module.exports = (app) => {
-    app.route("/products")
-        .get(productsController.getAll)
-        .post(productsController.createNew)      // Create
-    app.route("/products/:id")
-        .get(productsController.getById)         // Read
-        .put(productsController.editById)        // Update
-        .delete(productsController.deleteById)   // Delete
+    app.route("/Products")
+        .get(ProductsController.getAll)
+        .post(ProductsController.createNew)      // Create
+    app.route("/Products/:id")
+        .get(ProductsController.getById)         // Read
+        .put(ProductsController.editById)        // Update
+        .delete(ProductsController.deleteById)   // Delete
 }

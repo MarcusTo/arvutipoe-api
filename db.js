@@ -30,8 +30,51 @@ db.ProductBuyers.belongsTo(db.products)
 db.ProductBuyers.belongsTo(db.users)
 
 sync = async () => {
-    // await sequelize.sync({ force: true }) // Erase all and recreate
-    await sequelize.sync({alter:true}) // Alter existing to match the model
+    if (process.env.DROP_DB === "true") {
+        console.log("Begin DROP")
+        await db.connection.query('SET FOREIGN_KEY_CHECKS = 0')
+        console.log("Checks disabled")
+        await db.connection.sync({ force: true })
+        console.log('Database synchronised.')
+        await db.connection.query('SET FOREIGN_KEY_CHECKS = 1')
+        console.log("Checks enabled")
+
+        const [product, createdG] = await db.products.findOrCreate({
+            where: {
+                name: "1Of1"
+            },
+            defaults: {
+                name: "1Of1",
+                price: 3000,
+            }
+        })
+        console.log("product created: ", createdG)
+        const [user, createdP] = await db.users.findOrCreate({
+            where: {
+                name: "MarcusTo"
+            },
+            defaults: {
+                name: "MarcusTo"
+            }
+        })
+        console.log("Order created: ", createdP)
+        const [order, createdGP] = await db.order.findOrCreate({
+            where: {
+                id: 1
+            },
+            defaults: {
+                UserId: user.id,
+                ProductId: product.id,
+                price: 3000
+            }
+        })
+        console.log("Order created: ", createdGP)
+    }
+    else {
+        console.log("Begin ALTER")
+        await db.connection.sync({ alter: true }) // Alter existing to match the model
+        console.log('Database synchronised.')
+    }
 }
 
 module.exports = { db, sync }

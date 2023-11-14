@@ -30,13 +30,14 @@ info:
 
         |---|---|
 
-        | 400| Bad input parameters or invalid request. More information can be found in the response body.
+        | 400 | Bad input parameters or invalid request. More information can be found in the response body.
 
-        | 401| The consumer does not have access to the requested resource or the provided token is not valid.
+        | 401 | The consumer does not have access to the requested resource or the provided token is not
+        valid.
 
-        | 404| The requested resource can not be found or the user does not have access to the resource.
+        | 404 | The requested resource can not be found or the user does not have access to the resource.
 
-        | 5XX| A server error has occurred while processing the request.
+        | 500 | A server error has occurred while processing the request.
 paths:
     '/orders/{ID}':
         get:
@@ -110,7 +111,7 @@ paths:
                                         orderId: 2
                                         price: 600
                                         userId: 3
-                    description: Order has been updated.
+                    description: Order updated.
                 '404':
                     content:
                         application/json:
@@ -120,7 +121,7 @@ paths:
                                 Not Found:
                                     value:
                                         error: Order Not Found
-                    description: Not Found
+                    description: Order not found.
                 '500':
                     content:
                         application/json:
@@ -138,7 +139,7 @@ paths:
                 - orders
             responses:
                 '204':
-                    description: Succeeded
+                    description: Order deleted.
                 '404':
                     content:
                         application/json:
@@ -193,7 +194,7 @@ paths:
                                         name: Testikas
                                         id: 42
                                         price: 900
-                    description: Returns information of requested product
+                    description: Returns product information.
                 '404':
                     content:
                         application/json:
@@ -248,7 +249,7 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/product'
-                    description: Product information has been updated.
+                    description: Product updated.
                 '404':
                     content:
                         application/json:
@@ -276,7 +277,7 @@ paths:
                 - products
             responses:
                 '204':
-                    description: Product has been deleted
+                    description: Product deleted.
                 '404':
                     content:
                         application/json:
@@ -288,6 +289,10 @@ paths:
                                         Error: Product Not Found Or Already Deleted
                     description: Product Not Found
                 '500':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
                     description: "\r\nInternal server error."
             summary: Delete product
             description: Deletes an exsisting product.
@@ -343,7 +348,7 @@ paths:
                             examples:
                                 CreatedProduct:
                                     value:
-                                        name: Testikas
+                                        name: Test product
                                         price: 599
                     description: "\r\nProduct has been created."
                 '400':
@@ -383,7 +388,7 @@ paths:
                             examples:
                                 List Of All Users:
                                     value: []
-                    description: Returns a list of users
+                    description: Returns a list of users.
             summary: Get a list of users.
             description: |
                 Returns a list of users
@@ -396,9 +401,9 @@ paths:
                         examples:
                             AddUser:
                                 value:
-                                    email: some text
-                                    name: some text
-                                    phoneNumber: 99
+                                    email: MarcusTo@gmail.com
+                                    name: MarcusTo
+                                    phoneNumber: 777777
                 required: true
             tags:
                 - users
@@ -461,7 +466,7 @@ paths:
                                             email: marcusto@gmail.com
                                             name: MarcusTo
                                             phoneNumber: 5555555
-                    description: Returns information of an user.
+                    description: Returns user information.
                 '404':
                     content:
                         application/json:
@@ -511,7 +516,7 @@ paths:
                                 Not Found:
                                     value:
                                         Error: User Not Found
-                    description: User info has been updated
+                    description: User updated.
                 '404':
                     content:
                         application/json:
@@ -547,7 +552,7 @@ paths:
                     required: true
             responses:
                 '204':
-                    description: User has been deleted
+                    description: User deleted.
                 '404':
                     content:
                         application/json:
@@ -559,6 +564,10 @@ paths:
                                         Error: User Not Found
                     description: User Not Found
                 '500':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
                     description: "\r\nInternal server error."
             summary: Delete user
             description: Deletes an exsisting user.
@@ -658,7 +667,7 @@ paths:
                             examples:
                                 Get a list of all invoices:
                                     value: []
-                    description: Returns a list of invoices
+                    description: Returns a list of invoices.
             summary: Get a list of invoices.
             description: Returns a list of invoices
         post:
@@ -737,7 +746,7 @@ paths:
                                             price: 44
                                             orderId: 90
                                             userid: 24
-                    description: Returns information of requested product.
+                    description: Returns invoice information.
                 '404':
                     content:
                         application/json:
@@ -798,7 +807,7 @@ paths:
                                         orderId: 12
                                         userid: 41
                     description: |
-                        Returns a list of invoices
+                        Invoice updated.
                 '404':
                     content:
                         application/json:
@@ -860,7 +869,7 @@ paths:
 components:
     schemas:
         error:
-            title: Root Type for errir
+            title: Root Type for error
             description: ''
             type: object
             properties:
@@ -882,12 +891,9 @@ components:
                     format: int32
                     description: ''
                     type: integer
-            example: |-
-                {
-                    "id": 1,,
-                    "name": "Gaming PC Ultra",
-                    "price": 3999
-                }
+            example:
+                name: Gaming PC Ultra
+                price: 3999
         invoice:
             title: Root Type for invoice
             description: Invoice with product id and invoice specific id.
@@ -947,6 +953,7 @@ components:
                 invoiceId: 5
                 price: 666
         user:
+            title: Root type for user
             description: ''
             type: object
             properties:
@@ -966,9 +973,9 @@ components:
                     type: integer
             example:
                 id: 33
-                email: some text
-                name: some text
-                phoneNumber: 75
+                email: MarcusTo@gmail.com
+                name: MarcusTo
+                phoneNumber: 777777
 tags:
     -
         name: products

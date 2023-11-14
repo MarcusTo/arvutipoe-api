@@ -16,7 +16,7 @@ exports.createNew = async (req, res) => {
 }
 // READ
 exports.getAll = async (req, res) => {
-    const result = await products.findAll({ attributes: ["id", "name"] })
+    const result = await products.findAll({ attributes: ["id", "name","price"] })
     res.json(result)
 }
 exports.getById = async (req, res) => {
