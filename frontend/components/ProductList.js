@@ -2,14 +2,18 @@ export default {
     /*html*/
     template: `
     <table id="productsTable" class="table table-striped table-bordered">
+    <thead>
         <tr>
             <th>Name</th>
             <th>Price</th>
         </tr>
-        <tr v-for="product in products">
-            <td @click="getProduct(product.id)">{{ product.name }}</td>
-            <td>{{ product.price }}</td>
-        </tr>
+        </thead>
+        <tbody>
+            <tr v-for="product in products">
+                <td @click="getProduct(product.id)">{{ product.name }}</td>
+                <td>{{ product.price }}</td>
+            </tr>
+        </tbody>
     </table>
     `,
     emits: ["showModal"],
@@ -23,8 +27,7 @@ export default {
     },
     methods: {
         getProduct: async function (id) {
-            const productInModal = await (await fetch("http://localhost:8080/products/" + id)).json()
-            console.log("ProductsList: ", productInModal)
+            const productInModal = await (await fetch(this.API_URL + "/products/" + id)).json()
             this.$emit("showModal", productInModal)
         }
     }

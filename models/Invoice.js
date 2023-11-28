@@ -6,14 +6,18 @@ module.exports = (dbConnection, Sequelize, User) => {
             primaryKey: true,
             autoIncrement: true
         },
-        orderId: {
-            type: Sequelize.DECIMAL,
-            allowNull: false
-        },
+        // orderId: {
+        //     type: Sequelize.DECIMAL,
+        //     allowNull: false,
+        //     references: {
+        //         model: Order,
+        //         key: "id"
+        //     }
+        // },
         price: {
             type: Sequelize.DECIMAL,
         },
-        UserId: {
+        userId: {
             type: Sequelize.INTEGER,
             allowNull: false,
             references: {

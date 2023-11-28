@@ -1,24 +1,12 @@
-module.exports = (dbConnection, Sequelize, users, invoices,) => {
+module.exports = (dbConnection, Sequelize, users, products) => {
     const Order = dbConnection.define("Order", {
         id: {
             type: Sequelize.INTEGER,
             primaryKey: true,
             autoIncrement: true
         },
-        email: {
-            type: Sequelize.STRING
-        },
-        phoneNumber: {
-            type: Sequelize.INTEGER
-            
-        },
-        invoiceId: {
-            type: Sequelize.INTEGER,
-            allowNull: false,
-            references: {
-                model: invoices,
-                key: "id"
-            }
+        price: {
+            type: Sequelize.DECIMAL
         },
         productId:{
             type: Sequelize.INTEGER,
@@ -28,7 +16,7 @@ module.exports = (dbConnection, Sequelize, users, invoices,) => {
                 key: "id"
             }
         },
-        UserId:{
+        userId:{
             type: Sequelize.INTEGER,
             allowNull: false,
             references: {

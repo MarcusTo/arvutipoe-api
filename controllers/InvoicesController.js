@@ -1,5 +1,6 @@
 const { db } = require("../db")
-const invoice = db.invoices
+const User = require("../models/User")
+const invoices = db.invoices
 const { getBaseurl } = require("./helpers")
 
 // CREATE
@@ -16,7 +17,7 @@ exports.createNew = async (req, res) => {
 }
 // READ
 exports.getAll = async (req, res) => {
-    const result = await invoices.findAll({ attributes: ["id", "orderId", "price", "userId"] })
+    const result = await invoices.findAll({ attributes: ["id", "orderId", "price", "userId"], include: [User] })
     res.json(result)
 }
 exports.getById = async (req, res) => {

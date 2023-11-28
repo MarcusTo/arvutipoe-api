@@ -3,7 +3,7 @@ import confirmationModal from "./ConfirmationModal.js"
 export default {
     /*html*/
     template: `
-<div id="productInfoModal" class="modal" tabindex="-1">
+<div id="invoiceInfoModal" class="modal" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -13,17 +13,27 @@ export default {
                 <table class="table table-striped">
                     <tr>
                         <th>Id</th>
-                        <td>{{productInModal.id}}</td>
+                        <td>{{invoiceInModal.id}}</td>
                     </tr>
                     <tr>
                         <th>Name</th>
-                        <td v-if="isEditing"><input v-model="modifiedProduct.name"></td>
-                        <td v-else>{{productInModal.name}}</td>
+                        <td v-if="isEditing"><input v-model="modifiedInvoice.user.name"></td>
+                        <td v-else>{{invoiceInModal.user.name}}</td>
+                    </tr>
+                    <tr>
+                        <th>Email</th>
+                        <td v-if="isEditing"><input v-model="modifiedInvoice.user.email"></td>
+                        <td v-else>{{invoiceInModal.user.email}}</td>
+                    </tr>
+                    <tr>
+                        <th>Phone Number</th>
+                        <td v-if="isEditing"><input v-model="modifiedInvoice.name"></td>
+                        <td v-else>{{invoiceInModal.user.phoneNumber}}</td>
                     </tr>
                     <tr>
                         <th>Price</th>
-                        <td v-if="isEditing"><input v-model="modifiedProduct.price"></td>
-                        <td v-else>{{productInModal.price}}</td>
+                        <td v-if="isEditing"><input v-model="modifiedInvoice.price"></td>
+                        <td v-else>{{invoiceInModal.price}}</td>
                     </tr>
                 </table>
             </div>
@@ -53,44 +63,44 @@ export default {
         </div>
     </div>
 </div>
-<confirmation-modal :target="'#productInfoModal'" @confirmed="deleteProduct"></confirmation-modal>
+<confirmation-modal :target="'#modifiedInvoice'" @confirmed="deleteInvoice"></confirmation-modal>
     `,
     components: {
         confirmationModal
     },
-    emits: ["productUpdated"],
+    emits: ["invoiceUpdated"],
     props: {
-        productInModal: {}
+        invoiceInModal: {}
     },
     data() {
         return {
             isEditing: false,
-            modifiedProduct: {}
+            modifiedInvoice: {}
         }
     },
     methods: {
         startEditing() {
-            this.modifiedProduct = { ...this.productInModal }
+            this.modifiedInvoice = { ...this.invoiceInModal }
             this.isEditing = true
         },
         cancelEditing() {
             this.isEditing = false
         },
-        async saveModifiedProduct() {
-            console.log("Saving:", this.modifiedProduct);
-            const rawResponse = await fetch(this.API_URL + "/products/" + this.modifiedProduct.id, {
+        async saveModifiedInvoice() {
+            console.log("Saving:", this.modifiedInvoice);
+            const rawResponse = await fetch(this.API_URL + "/invoices/" + this.modifiedInvoice.id, {
                 method: 'PUT',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(this.modifiedProduct)
+                body: JSON.stringify(this.modifiedInvoice)
             });
             console.log(rawResponse);
-            this.$emit("productUpdated", this.modifiedProduct)
+            this.$emit("invoiceUpdated", this.modifiedInvoice)
             this.isEditing = false
         },
-        deleteProduct() {
+        deleteInvoice() {
             console.log("DELETE confirmed");
         }
     }

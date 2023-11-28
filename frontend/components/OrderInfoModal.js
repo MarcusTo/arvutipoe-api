@@ -3,7 +3,7 @@ import confirmationModal from "./ConfirmationModal.js"
 export default {
     /*html*/
     template: `
-<div id="productInfoModal" class="modal" tabindex="-1">
+<div id="orderInfoModal" class="modal" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -13,17 +13,22 @@ export default {
                 <table class="table table-striped">
                     <tr>
                         <th>Id</th>
-                        <td>{{productInModal.id}}</td>
+                        <td>{{orderInModal.id}}</td>
                     </tr>
                     <tr>
                         <th>Name</th>
-                        <td v-if="isEditing"><input v-model="modifiedProduct.name"></td>
-                        <td v-else>{{productInModal.name}}</td>
+                        <td v-if="isEditing"><input v-model="modifiedOrder.name"></td>
+                        <td v-else>{{orderInModal.name}}</td>
+                    </tr>
+                    <tr>
+                        <th>Email</th>
+                        <td v-if="isEditing"><input v-model="modifiedOrder.name"></td>
+                        <td v-else>{{orderInModal.email}}</td>
                     </tr>
                     <tr>
                         <th>Price</th>
-                        <td v-if="isEditing"><input v-model="modifiedProduct.price"></td>
-                        <td v-else>{{productInModal.price}}</td>
+                        <td v-if="isEditing"><input v-model="modifiedOrder.price"></td>
+                        <td v-else>{{orderInModal.price}}</td>
                     </tr>
                 </table>
             </div>
@@ -36,7 +41,7 @@ export default {
                                 <button type="button" class="btn btn-danger" data-bs-target="#confirmationModal" data-bs-toggle="modal">Delete</button>
                             </div>
                             <div class="col-auto">
-                                <button type="button" class="btn btn-success mx-2" @click="saveModifiedProduct">Save</button>
+                                <button type="button" class="btn btn-success mx-2" @click="saveModifiedOrder">Save</button>
                                 <button type="button" class="btn btn-secondary" @click="cancelEditing">Cancel</button>
                             </div>
                         </template>
@@ -53,44 +58,44 @@ export default {
         </div>
     </div>
 </div>
-<confirmation-modal :target="'#productInfoModal'" @confirmed="deleteProduct"></confirmation-modal>
+<confirmation-modal :target="'#orderInfoModal'" @confirmed="deleteOrder"></confirmation-modal>
     `,
     components: {
         confirmationModal
     },
-    emits: ["productUpdated"],
+    emits: ["orderUpdated"],
     props: {
-        productInModal: {}
+        orderInModal: {}
     },
     data() {
         return {
             isEditing: false,
-            modifiedProduct: {}
+            modifiedOrder: {}
         }
     },
     methods: {
         startEditing() {
-            this.modifiedProduct = { ...this.productInModal }
+            this.modifiedOrder = { ...this.orderInModal }
             this.isEditing = true
         },
         cancelEditing() {
             this.isEditing = false
         },
-        async saveModifiedProduct() {
-            console.log("Saving:", this.modifiedProduct);
-            const rawResponse = await fetch(this.API_URL + "/products/" + this.modifiedProduct.id, {
+        async saveModifiedOrder() {
+            console.log("Saving:", this.modifiedOrder);
+            const rawResponse = await fetch(this.API_URL + "/ordrs/" + this.modifiedOrder.id, {
                 method: 'PUT',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(this.modifiedProduct)
+                body: JSON.stringify(this.modifiedOrder)
             });
             console.log(rawResponse);
-            this.$emit("productUpdated", this.modifiedProduct)
+            this.$emit("orderUpdated", this.modifiedOrder)
             this.isEditing = false
         },
-        deleteProduct() {
+        deleteOrder() {
             console.log("DELETE confirmed");
         }
     }

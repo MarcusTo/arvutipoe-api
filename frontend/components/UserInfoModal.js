@@ -3,7 +3,7 @@ import confirmationModal from "./ConfirmationModal.js"
 export default {
     /*html*/
     template: `
-<div id="productInfoModal" class="modal" tabindex="-1">
+<div id="userInfoModal" class="modal" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -13,21 +13,25 @@ export default {
                 <table class="table table-striped">
                     <tr>
                         <th>Id</th>
-                        <td>{{productInModal.id}}</td>
+                        <td>{{userInModal.id}}</td>
                     </tr>
                     <tr>
                         <th>Name</th>
-                        <td v-if="isEditing"><input v-model="modifiedProduct.name"></td>
-                        <td v-else>{{productInModal.name}}</td>
+                        <td v-if="isEditing"><input v-model="modifiedUser.name"></td>
+                        <td v-else>{{userInModal.name}}</td>
                     </tr>
                     <tr>
-                        <th>Price</th>
-                        <td v-if="isEditing"><input v-model="modifiedProduct.price"></td>
-                        <td v-else>{{productInModal.price}}</td>
+                        <th>Email</th>
+                        <td v-if="isEditing"><input v-model="modifiedUser.email"></td>
+                        <td v-else>{{userInModal.email}}</td>
+                    </tr>
+                    <tr>
+                        <th>Phone</th>
+                        <td v-if="isEditing"><input v-model="modifiedUser.phoneNumber"></td>
+                        <td v-else>{{userInModal.phoneNumber}}</td>
                     </tr>
                 </table>
             </div>
-
             <div class="modal-footer">
                 <div class="container">
                     <div class="row">
@@ -36,7 +40,7 @@ export default {
                                 <button type="button" class="btn btn-danger" data-bs-target="#confirmationModal" data-bs-toggle="modal">Delete</button>
                             </div>
                             <div class="col-auto">
-                                <button type="button" class="btn btn-success mx-2" @click="saveModifiedProduct">Save</button>
+                                <button type="button" class="btn btn-success mx-2" @click="saveModifiedCar">Save</button>
                                 <button type="button" class="btn btn-secondary" @click="cancelEditing">Cancel</button>
                             </div>
                         </template>
@@ -53,44 +57,44 @@ export default {
         </div>
     </div>
 </div>
-<confirmation-modal :target="'#productInfoModal'" @confirmed="deleteProduct"></confirmation-modal>
+<confirmation-modal :target="'#userInfoModal'" @confirmed="deleteUser"></confirmation-modal>
     `,
     components: {
         confirmationModal
     },
-    emits: ["productUpdated"],
+    emits: ["userUpdated"],
     props: {
-        productInModal: {}
+        userInModal: {}
     },
     data() {
         return {
             isEditing: false,
-            modifiedProduct: {}
+            modifiedUser: {}
         }
     },
     methods: {
         startEditing() {
-            this.modifiedProduct = { ...this.productInModal }
+            this.modifiedUser = { ...this.userInModal }
             this.isEditing = true
         },
         cancelEditing() {
             this.isEditing = false
         },
-        async saveModifiedProduct() {
-            console.log("Saving:", this.modifiedProduct);
-            const rawResponse = await fetch(this.API_URL + "/products/" + this.modifiedProduct.id, {
+        async saveModifiedUser() {
+            console.log("Saving:", this.modifiedUser);
+            const rawResponse = await fetch(this.API_URL + "/users/" + this.modifiedUser.id, {
                 method: 'PUT',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(this.modifiedProduct)
+                body: JSON.stringify(this.modifiedUser)
             });
             console.log(rawResponse);
-            this.$emit("productUpdated", this.modifiedProduct)
+            this.$emit("userUpdated", this.modifiedUser)
             this.isEditing = false
         },
-        deleteProduct() {
+        deleteUser(){
             console.log("DELETE confirmed");
         }
     }

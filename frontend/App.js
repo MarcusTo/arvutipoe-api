@@ -1,30 +1,39 @@
-import productsList from "./components/ProductList.js"
-import productInfoModal from "./components/ProductInfoModal.js"
 export default {
     /*html*/
-    template: `
-    <products-list :key="update" @showModal="openModal"></products-list>
-    <product-info-modal @productUpdated="updateView" :productInModal="productInModal"></product-info-modal>
+  template: `
+  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/client">Navbar</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <router-link class="nav-link" to="/products">Products</router-link>
+          </li>
+          <li class="nav-item">
+          <router-link class="nav-link" to="/users">Users</router-link>
+          </li>
+          <li class="nav-item">
+            <router-link class="nav-link" to="/orders">Orders</router-link>
+          </li>
+          <li class="nav-item">
+          <router-link class="nav-link" to="/invoices">Invoices</router-link>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+          </li>
+        </ul>
+        <form class="d-flex" role="search">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+  </nav> 
+    <router-view></router-view>
     `,
     components: {
-        productsList,
-        productInfoModal
-    },
-    data() {
-        return {
-            update: 0,
-            productInModal: { id: "", name: "", price: "" }
-        }
-    },
-    methods: {
-        openModal(product) {
-            this.productInModal = product
-            let productInfoModal = new bootstrap.Modal(document.getElementById("productInfoModal"))
-            productInfoModal.show()
-        },
-        updateView(product) {
-            this.update++
-            this.productInModal = product
-        }
     }
 }

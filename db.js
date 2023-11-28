@@ -20,8 +20,8 @@ db.connection = sequelize
 db.users = require("./models/User")(sequelize, Sequelize)
 db.products = require("./models/Product")(sequelize, Sequelize)
 db.ProductBuyers = require("./models/ProductBuyers")(sequelize, Sequelize, db.products, db.users)
-db.Invoice = require("./models/Invoice")(sequelize, Sequelize, db.users)
-
+db.order = require("./models/Order")(sequelize, Sequelize, db.users, db.products)
+db.invoice = require("./models/Invoice")(sequelize, Sequelize, db.users, db.order)
 db.products.belongsToMany(db.users, { through: db.ProductBuyers })
 db.users.belongsToMany(db.products, { through: db.ProductBuyers })
 db.products.hasMany(db.ProductBuyers)
@@ -39,7 +39,7 @@ sync = async () => {
         await db.connection.query('SET FOREIGN_KEY_CHECKS = 1')
         console.log("Checks enabled")
 
-        const [product, createdG] = await db.products.findOrCreate({
+        const [product, createdP] = await db.products.findOrCreate({
             where: {
                 name: "1Of1"
             },
@@ -48,8 +48,9 @@ sync = async () => {
                 price: 3000,
             }
         })
-        console.log("product created: ", createdG)
-        const [user, createdP] = await db.users.findOrCreate({
+        console.log("product created: ", createdP, product.id)
+
+        const [user, createdU] = await db.users.findOrCreate({
             where: {
                 name: "MarcusTo"
             },
@@ -57,18 +58,19 @@ sync = async () => {
                 name: "MarcusTo"
             }
         })
-        console.log("Order created: ", createdP)
-        const [order, createdGP] = await db.order.findOrCreate({
+        console.log("User created: ", createdU, user.id)
+
+        const [order, createdPU] = await db.order.findOrCreate({
             where: {
                 id: 1
             },
             defaults: {
-                UserId: user.id,
-                ProductId: product.id,
+                userId: user.id,
+                productId: product.id,
                 price: 3000
             }
         })
-        console.log("Order created: ", createdGP)
+        console.log("Order created: ", createdPU)
     }
     else {
         console.log("Begin ALTER")
