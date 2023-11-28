@@ -53,13 +53,12 @@ paths:
                                     type: string
                             examples:
                                 Single Order:
-                                    value: |-
-                                        [
-                                            "id":1,
-                                            "orderId":2,
-                                            "price":600,
-                                            "userId":3
-                                        ]
+                                    value:
+                                        id: 3
+                                        price: 1600
+                                        productId: 25
+                                        productAmount: 1
+                                        invoiceId: 4
                     description: Returns order information
                 '404':
                     content:
@@ -94,7 +93,12 @@ paths:
                                 type: string
                         examples:
                             New order:
-                                value: '{orderid: 2, productid: 3, productamount: 1, price: 200}'
+                                value:
+                                    id: 3
+                                    price: 1600
+                                    productId: 25
+                                    productAmount: 1
+                                    invoiceId: 4
                 required: true
             tags:
                 - orders
@@ -107,10 +111,11 @@ paths:
                             examples:
                                 newOrder:
                                     value:
-                                        id: 1
-                                        orderId: 2
-                                        price: 600
-                                        userId: 3
+                                        id: 3
+                                        price: 1600
+                                        productId: 25
+                                        productAmount: 1
+                                        invoiceId: 4
                     description: Order updated.
                 '404':
                     content:
@@ -592,8 +597,13 @@ paths:
                                 items:
                                     type: string
                             examples:
-                                Empty Array:
-                                    value: []
+                                Return all orders:
+                                    value:
+                                        id: 3
+                                        price: 1600
+                                        productId: 25
+                                        productAmount: 1
+                                        invoiceId: 4
                     description: Returns a list of orders
             summary: Get a list of orders.
             description: Returns a list of orders
@@ -606,11 +616,11 @@ paths:
                         examples:
                             AddOrder:
                                 value:
-                                    Id: 97
-                                    productId: 50
-                                    productAmount: 81
-                                    invoiceId: 45
-                                    price: 16
+                                    id: 3
+                                    price: 1600
+                                    productId: 25
+                                    productAmount: 1
+                                    invoiceId: 4
                 required: true
             tags:
                 - orders
@@ -623,11 +633,11 @@ paths:
                             examples:
                                 newOrder:
                                     value:
-                                        id: 73
-                                        productId: 94
-                                        productAmount: 7
-                                        invoiceId: 74
-                                        price: 45
+                                        id: 3
+                                        price: 1600
+                                        productId: 25
+                                        productAmount: 1
+                                        invoiceId: 4
                     description: Order has been created.
                 '400':
                     content:
@@ -694,10 +704,10 @@ paths:
                             examples:
                                 CreatedInvoice:
                                     value:
-                                        id: 24
-                                        price: 79
-                                        orderId: 1
-                                        userid: 97
+                                        id: 3
+                                        price: 1600
+                                        orderId: 3
+                                        userId: 4
                     description: |
                         Invoice has been created
                 '400':
@@ -705,6 +715,10 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/error'
+                            examples:
+                                Not Found:
+                                    value:
+                                        error: Invoice Not Found
                     description: Invoice not found.
                 '500':
                     content:
@@ -741,11 +755,10 @@ paths:
                             examples:
                                 Single Invoice:
                                     value:
-                                        -
-                                            id: 31
-                                            price: 44
-                                            orderId: 90
-                                            userid: 24
+                                        id: 31
+                                        price: 44
+                                        orderId: 90
+                                        userid: 24
                     description: Returns invoice information.
                 '404':
                     content:
@@ -778,10 +791,10 @@ paths:
                         examples:
                             newInvoice:
                                 value:
-                                    id: 36
-                                    price: 64
-                                    orderId: 68
-                                    userid: 99
+                                    id: 3
+                                    price: 1600
+                                    orderId: 3
+                                    userId: 4
                 required: true
             tags:
                 - invoices
@@ -794,7 +807,7 @@ paths:
                     in: path
                     required: true
             responses:
-                '200':
+                '202':
                     content:
                         application/json:
                             schema:
@@ -802,10 +815,10 @@ paths:
                             examples:
                                 newInvoice:
                                     value:
-                                        id: 85
-                                        price: 5
-                                        orderId: 12
-                                        userid: 41
+                                        id: 3
+                                        price: 1600
+                                        orderId: 3
+                                        userId: 4
                     description: |
                         Invoice updated.
                 '404':

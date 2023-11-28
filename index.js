@@ -14,6 +14,7 @@ app.use("/docs", swaggerui.serve, swaggerui.setup(swaggerDocument))
 
 require("./routes/productRoutes")(app)
 require("./routes/userRoutes")(app)
+require("./routes/orderRoutes")(app)
 require("./routes/productBuyersRoutes")(app)
 
 app.listen(port, async () => {
