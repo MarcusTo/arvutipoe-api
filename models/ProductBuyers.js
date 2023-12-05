@@ -5,9 +5,6 @@ module.exports = (dbConnection, Sequelize, Product, User) => {
             primaryKey: true,
             autoIncrement: true
         },
-        price: {
-            type: Sequelize.DECIMAL,
-        },
         userId:{
             type:Sequelize.INTEGER,
             allowNull:false,
@@ -24,6 +21,10 @@ module.exports = (dbConnection, Sequelize, Product, User) => {
                 key: "id"
             }
         },
+        price: {
+            type: Sequelize.DECIMAL,
+        },
+        
     });
 
     // ProductBuyers.belongsTo(Product);

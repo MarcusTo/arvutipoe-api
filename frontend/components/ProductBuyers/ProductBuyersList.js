@@ -26,11 +26,11 @@ export default {
         }
     },
     async created() {
-        this.orders = await (await fetch("http://localhost:8080/productBuyers")).json()
+        this.orders = await (await fetch("http://localhost:8080/ProductBuyers")).json()
     },
     methods: {
         getUser: async function (id) {
-            const orderInModal = await (await fetch(this.API_URL + "/productBuyers/" + id)).json()
+            const orderInModal = await (await fetch(this.API_URL + "/ProductBuyers/" + id)).json()
             this.$emit("showModal", orderInModal)
         }
     }

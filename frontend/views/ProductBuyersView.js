@@ -1,4 +1,4 @@
-import productBuyersList from "../components/ProductBuyersList.js"
+import productBuyersList from "../components/ProductBuyers/ProductBuyersList.js"
 import productBuyersInfoModal from "../components/ProductBuyers/ProductBuyersInfoModal.js"
 export default {
     /*html*/
@@ -13,7 +13,7 @@ export default {
     data() {
         return {
             update: 0,
-            productBuyerInModal: { id: "", name: "", price: ""}
+            productBuyerInModal: { id: "", userId:"", productId:"", name: "", price: ""}
         }
     },
     methods: {

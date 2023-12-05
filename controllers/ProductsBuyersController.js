@@ -1,5 +1,5 @@
 const { db } = require("../db")
-const productBuyer = db.ProductBuyers
+const productBuyer = db.productBuyer
 const { getBaseurl } = require("./helpers")
 
 // CREATE
@@ -7,7 +7,7 @@ exports.createNew = async (req, res) => {
     if (!req.body.id || !req.body.price|| !req.body.productAmount) {
         return res.status(400).send({ error: "One or all required parameters are missing" })
     }
-    const createdProductBuyer = await productBuyers.create(req.body, {
+    const createdProductBuyer = await productBuyer.create(req.body, {
         fields: ["price", "productAmount"]
     })
     res.status(201)
@@ -22,7 +22,7 @@ exports.getAll = async (req, res) => {
     res.json(result)
 }
 exports.getById = async (req, res) => {
-    const foundProductBuyer = await productBuyers.findByPk(req.params.id)
+    const foundProductBuyer = await productBuyer.findByPk(req.params.id)
     if (foundProductBuyer === null) {
         return res.status(404).send({ error: `Product Buyer not found` })
     }
@@ -30,7 +30,7 @@ exports.getById = async (req, res) => {
 }
 // UPDATE
 exports.editById = async (req, res) => {
-    const updateResult = await productBuyers.update({ ...req.body }, {
+    const updateResult = await productBuyer.update({ ...req.body }, {
         where: { id: req.params.id },
         fields: ["price", "productAmount"]
     })
@@ -43,7 +43,7 @@ exports.editById = async (req, res) => {
 }
 // DELETE
 exports.deleteById = async (req, res) => {
-    const deletedAmount = await productBuyers.destroy({
+    const deletedAmount = await productBuyer.destroy({
         where: { id: req.params.id }
     })
     if (deletedAmount === 0) {

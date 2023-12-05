@@ -78,7 +78,7 @@ export default {
         },
         async saveModifiedProduct() {
             console.log("Saving:", this.modifiedProductBuyers);
-            const rawResponse = await fetch(this.API_URL + "/productsBuyers/" + this.modifiedProductBuyers.id, {
+            const rawResponse = await fetch(this.API_URL + "/ProductBuyers/" + this.modifiedProductBuyers.id, {
                 method: 'PUT',
                 headers: {
                     'Accept': 'application/json',

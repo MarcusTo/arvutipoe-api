@@ -31,8 +31,8 @@ db.products.hasMany(db.ProductBuyers)
 db.users.hasMany(db.ProductBuyers)
 db.orders.hasMany(db.products)
 
-ProductBuyers.belongsTo(db.products);
-ProductBuyers.belongsTo(db.users);
+db.ProductBuyers.belongsTo(db.products);
+db.ProductBuyers.belongsTo(db.users);
 
 sync = async () => {
     try {

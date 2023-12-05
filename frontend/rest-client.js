@@ -6,7 +6,7 @@ import ProductsView from './views/ProductsView.js'
 
 import UsersView from './views/UsersView.js'
 import OrdersView from './views/OrdersView.js'
-import ProductBuyers from '../models/ProductBuyersView.js'
+import ProductBuyersView from './views/ProductBuyersView.js'
 
 const routes = [
     {path: "/products", component: ProductsView},
