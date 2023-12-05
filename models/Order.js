@@ -23,7 +23,11 @@ module.exports = (dbConnection, Sequelize, Product, User) => {
         },
         price: {
             type: Sequelize.DECIMAL
-        }, 
+        },
+        productAmount:{
+            type: Sequelize.INTEGER,
+            allowNull:false
+        }
     })
     return Order
 }

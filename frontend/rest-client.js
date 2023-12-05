@@ -6,13 +6,11 @@ import ProductsView from './views/ProductsView.js'
 
 import UsersView from './views/UsersView.js'
 import OrdersView from './views/OrdersView.js'
-import ProductBuyersView from './views/ProductBuyersView.js'
 
 const routes = [
     {path: "/products", component: ProductsView},
     {path: "/users", component: UsersView},
     {path: "/orders", component: OrdersView},
-    {path: "/ProductBuyers", component: ProductBuyersView}
 ]
 
 const router = createRouter({

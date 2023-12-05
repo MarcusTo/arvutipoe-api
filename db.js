@@ -19,20 +19,13 @@ db.Sequelize = Sequelize
 db.connection = sequelize
 
 db.users = require("./models/User")(sequelize, Sequelize)
+
 db.products = require("./models/Product")(sequelize, Sequelize)
 
-db.ProductBuyers = require("./models/ProductBuyers")(sequelize, Sequelize, db.products, db.users)
-db.orders = require("./models/Order")(sequelize, Sequelize, db.products)
-
-db.products.belongsToMany(db.users, { through: db.ProductBuyers })
-db.users.belongsToMany(db.products, { through: db.ProductBuyers })
-
-db.products.hasMany(db.ProductBuyers)
-db.users.hasMany(db.ProductBuyers)
+db.orders = require("./models/Order")(sequelize, Sequelize, db.products, db.users)
 db.orders.hasMany(db.products)
 
-db.ProductBuyers.belongsTo(db.products);
-db.ProductBuyers.belongsTo(db.users);
+
 
 sync = async () => {
     try {
@@ -51,6 +44,7 @@ sync = async () => {
                 defaults: {
                     name: "1Of1",
                     price: 3000,
+                    productAmount: 1
                 }
             });
             console.log("Product created:", createdP, product.id);
@@ -72,19 +66,12 @@ sync = async () => {
                 defaults: {
                     userId: user.id,
                     productId: product.id,
+                    productAmount:1,
                     price: 1600
                 }
-            });
+            })
             console.log("Order created:", createdPU);
 
-            // const [ProductBuyers, createdI] = await db.ProductBuyers.findOrCreate({
-            //     where: {
-            //         orderId: order.id,
-            //         userId: user.id,
-            //         price: 1600
-            //     }
-            // });
-            // console.log("Order created:", createdI, ProductBuyers.id);
 
             await db.connection.query('SET FOREIGN_KEY_CHECKS = 1');
             console.log("Checks enabled");
