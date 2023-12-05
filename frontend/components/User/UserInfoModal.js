@@ -1,66 +1,60 @@
 import confirmationModal from "../ConfirmationModal.js"
+import UserForm from "../User/UserForm.js"
+import UserDetails from "../User/UserDetails.js"
 
 export default {
     /*html*/
     template: `
-<div id="userInfoModal" class="modal" tabindex="-1">
+    <template>
+  <div id="userInfoModal" class="modal" tabindex="-1">
     <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <table class="table table-striped">
-                    <tr>
-                        <th>Id</th>
-                        <td>{{userInModal.id}}</td>
-                    </tr>
-                    <tr>
-                        <th>Name</th>
-                        <td v-if="isEditing"><input v-model="modifiedUser.name"></td>
-                        <td v-else>{{userInModal.name}}</td>
-                    </tr>
-                    <tr>
-                        <th>Email</th>
-                        <td v-if="isEditing"><input v-model="modifiedUser.email"></td>
-                        <td v-else>{{userInModal.email}}</td>
-                    </tr>
-                    <tr>
-                        <th>Phone</th>
-                        <td v-if="isEditing"><input v-model="modifiedUser.phoneNumber"></td>
-                        <td v-else>{{userInModal.phoneNumber}}</td>
-                    </tr>
-                </table>
-            </div>
-            <div class="modal-footer">
-                <div class="container">
-                    <div class="row">
-                        <template v-if="isEditing">
-                            <div class="col me-auto">
-                                <button type="button" class="btn btn-danger" data-bs-target="#confirmationModal" data-bs-toggle="modal">Delete</button>
-                            </div>
-                            <div class="col-auto">
-                                <button type="button" class="btn btn-success mx-2" @click="saveModifiedCar">Save</button>
-                                <button type="button" class="btn btn-secondary" @click="cancelEditing">Cancel</button>
-                            </div>
-                        </template>
-                        <template v-else>
-                            <div class="col me-auto"></div>
-                            <div class="col-auto">
-                                <button type="button" class="btn btn-warning mx-2" @click="startEditing">Edit</button>
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            </div>
-                        </template>
-                    </div>
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <user-form
+            v-if="isEditing"
+            :id="modifiedUser.id"
+            v-model:email="modifiedUser.email"
+            v-model:name="modifiedUser.name"
+            v-model:phoneNumber="modifiedUser.phoneNumber"
+          ></user-form>
+          <user-details v-else :userInModal="userInModal"></user-details>
+        </div>
+        <div class="modal-footer">
+          <div class="container">
+            <div class="row">
+              <template v-if="isEditing">
+                <div class="col me-auto">
+                  <button type="button" class="btn btn-danger" data-bs-target="#confirmationModal" data-bs-toggle="modal">Delete</button>
                 </div>
+                <div class="col-auto">
+                  <button type="button" class="btn btn-success mx-2" @click="saveModifiedUser">Save</button>
+                  <button type="button" class="btn btn-secondary" @click="cancelEditing">Cancel</button>
+                </div>
+              </template>
+              <template v-else>
+                <div class="col me-auto"></div>
+                <div class="col-auto">
+                  <button type="button" class="btn btn-warning mx-2" @click="startEditing">Edit</button>
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+              </template>
             </div>
+          </div>
         </div>
     </div>
 </div>
+</div>
 <confirmation-modal :target="'#userInfoModal'" @confirmed="deleteUser"></confirmation-modal>
+</template>
+
     `,
     components: {
-        confirmationModal
+        confirmationModal,
+        UserForm,
+        UserDetails
     },
     emits: ["userUpdated"],
     props: {

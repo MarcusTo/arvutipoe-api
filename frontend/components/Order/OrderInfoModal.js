@@ -1,5 +1,6 @@
 import confirmationModal from "../ConfirmationModal.js"
-
+import OrderForm from "./OrderForm.js"
+import OrderDetails from "./OrderDetails.js"
 export default {
     /*html*/
     template: `
@@ -10,30 +11,8 @@ export default {
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <table class="table table-striped">
-                    <tr>
-                        <th>Id</th>
-                        <td>{{orderInModal.id}}</td>
-                    </tr>
-                    <tr>
-                        <th>userId</th>
-                        <td>{{orderInModal.userId}}</td>
-                    </tr>
-                    <tr>
-                        <th>productId</th>
-                        <td>{{orderInModal.productId}}</td>
-                    </tr>
-                    <tr>
-                        <th>Price</th>
-                        <td v-if="isEditing"><input v-model="modifiedOrder.price"></td>
-                        <td v-else>{{orderInModal.price}}</td>
-                    </tr>
-                    <tr>
-                        <th>ProductAmount</th>
-                        <td v-if="isEditing"><input v-model="modifiedOrder.productAmount"></td>
-                        <td v-else>{{orderInModal.productAmount}}</td>
-                    </tr>
-                </table>
+            <order-form v-if="isEditing" :id="modifiedOrder.id" v-model:userId="modifiedOrder.userId" v-model:productId="modifiedOrder.productId" v-model:price="modifiedOrder.price" v-model:productAmount="modifiedCar.productAmount"></order-form>
+            <order-details v-else :orderInModal="orderInModal"></order-details>
             </div>
 
             <div class="modal-footer">
@@ -64,7 +43,9 @@ export default {
 <confirmation-modal :target="'#orderInfoModal'" @confirmed="deleteOrder"></confirmation-modal>
     `,
     components: {
-        confirmationModal
+        confirmationModal,
+        OrderForm,
+        OrderDetails
     },
     emits: ["orderUpdated"],
     props: {

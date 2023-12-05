@@ -35,7 +35,8 @@ export default {
 
         <th>Product Amount</th>
 
-        <td><input :value="productAmount" @input="$emit('update:price',$event.target.value)"></td>
+        <input :value="productAmount" @input="$emit('update:productAmount', $event.target.value)">
+
 
     </tr>
 
