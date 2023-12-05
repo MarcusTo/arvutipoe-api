@@ -1,4 +1,4 @@
-module.exports = (dbConnection, Sequelize) => {
+module.exports = (dbConnection, Sequelize, ) => {
     const Product = dbConnection.define("Product", {
         id: {
             type: Sequelize.INTEGER,
@@ -11,6 +11,10 @@ module.exports = (dbConnection, Sequelize) => {
         },
         price: {
             type: Sequelize.DECIMAL
+        },
+        productAmount:{
+            type: Sequelize.INTEGER,
+            allowNull:false
         }
     })
     return Product

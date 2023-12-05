@@ -17,7 +17,7 @@ exports.createNew = async (req, res) => {
 
 // READ
 exports.getAll = async (req, res) => {
-    const result = await orders.findAll({ attributes: ["id", "productId","userId", "price", ] })
+    const result = await orders.findAll({ attributes: ["id", "productId","price","productAmount" ] })
     res.json(result);
 };
 
@@ -33,7 +33,7 @@ exports.getById = async (req, res) => {
 exports.editById = async (req, res) => {
     const updateResult = await orders.update({ ...req.body }, {
         where: { id: req.params.id },
-        fields: ["id", "productId","userId", "price", ]
+        fields: ["id", "productId","price", "productAmount" ]
     });
     if (updateResult[0] == 0) {
         return res.status(404).send({ error: "Order not found" });

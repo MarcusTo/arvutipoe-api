@@ -1,5 +1,5 @@
-import productList from "../components/ProductList.js"
-import productInfoModal from "../components/ProductInfoModal.js"
+import productList from "../components/Product/ProductList.js"
+import productInfoModal from "../components/Product/ProductInfoModal.js"
 export default {
     /*html*/
     template: `

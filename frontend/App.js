@@ -19,7 +19,7 @@ template: `
           <router-link class="nav-link" to="/orders">Orders</router-link>
         </li>
         <li class="nav-item">
-        <router-link class="nav-link" to="/invoices">Invoices</router-link>
+        <router-link class="nav-link" to="/ProductBuyers">Product Buyers</router-link>
         </li>
         <li class="nav-item">
           <a class="nav-link disabled" aria-disabled="true">Disabled</a>

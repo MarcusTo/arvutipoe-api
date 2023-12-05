@@ -6,7 +6,8 @@ module.exports = (dbConnection, Sequelize) => {
             autoIncrement: true
         },
         email: {
-            type: Sequelize.STRING
+            type: Sequelize.STRING,
+            allownull:false
         },
         name: {
             type: Sequelize.STRING,
@@ -14,8 +15,8 @@ module.exports = (dbConnection, Sequelize) => {
         },
         
         phoneNumber: {
-            type: Sequelize.INTEGER
-            
+            type: Sequelize.STRING,
+            allownull: false
         }
     })
     return User

@@ -22,17 +22,17 @@ db.users = require("./models/User")(sequelize, Sequelize)
 db.products = require("./models/Product")(sequelize, Sequelize)
 
 db.ProductBuyers = require("./models/ProductBuyers")(sequelize, Sequelize, db.products, db.users)
-db.order = require("./models/Order")(sequelize, Sequelize, db.products)
-db.invoice = require("./models/Invoice")(sequelize, Sequelize, db.users, db.order)
+db.orders = require("./models/Order")(sequelize, Sequelize, db.products)
 
 db.products.belongsToMany(db.users, { through: db.ProductBuyers })
 db.users.belongsToMany(db.products, { through: db.ProductBuyers })
 
 db.products.hasMany(db.ProductBuyers)
 db.users.hasMany(db.ProductBuyers)
+db.orders.hasMany(db.products)
 
-db.ProductBuyers.belongsTo(db.products)
-db.ProductBuyers.belongsTo(db.users)
+ProductBuyers.belongsTo(db.products);
+ProductBuyers.belongsTo(db.users);
 
 sync = async () => {
     try {
@@ -65,7 +65,7 @@ sync = async () => {
             });
             console.log("User created:", createdU, user.id);
 
-            const [order, createdPU] = await db.order.findOrCreate({
+            const [order, createdPU] = await db.orders.findOrCreate({
                 where: {
                     id: 1
                 },
@@ -77,15 +77,14 @@ sync = async () => {
             });
             console.log("Order created:", createdPU);
 
-            // Create Invoice
-            const [invoice, createdI] = await db.invoice.findOrCreate({
-                where: {
-                    orderId: order.id,
-                    userId: user.id,
-                    price: 1600
-                }
-            });
-            console.log("Invoice created:", createdI, invoice.id);
+            // const [ProductBuyers, createdI] = await db.ProductBuyers.findOrCreate({
+            //     where: {
+            //         orderId: order.id,
+            //         userId: user.id,
+            //         price: 1600
+            //     }
+            // });
+            // console.log("Order created:", createdI, ProductBuyers.id);
 
             await db.connection.query('SET FOREIGN_KEY_CHECKS = 1');
             console.log("Checks enabled");

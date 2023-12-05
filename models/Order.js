@@ -1,19 +1,19 @@
-module.exports = (dbConnection, Sequelize, Product) => {
+module.exports = (dbConnection, Sequelize, Product, User) => {
     const Order = dbConnection.define("Order", {
         id: {
             type: Sequelize.INTEGER,
             primaryKey: true,
             autoIncrement: true
         },
-        // userId:{
-        //     type: Sequelize.INTEGER,
-        //     allowNull: false,
-        //     references: {
-        //         model: User,
-        //         key: "id"
-        //     }
-        // },
-        productId:{
+        userId:{
+            type:Sequelize.INTEGER,
+            allowNull:false,
+            references:{
+                model:User,
+                key:"id"
+            }
+        },
+        productId: {
             type: Sequelize.INTEGER,
             allowNull: false,
             references: {
@@ -21,9 +21,6 @@ module.exports = (dbConnection, Sequelize, Product) => {
                 key: "id"
             }
         },
-        productAmount: {
-            type: Sequelize.DECIMAL
-        }, 
         price: {
             type: Sequelize.DECIMAL
         }, 

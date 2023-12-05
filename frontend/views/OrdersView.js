@@ -1,5 +1,5 @@
-import orderList from "../components/OrderList.js"
-import orderInfoModal from "../components/OrderInfoModal.js"
+import orderList from "../components/Order/OrderList.js"
+import orderInfoModal from "../components/Order/OrderInfoModal.js"
 export default {
     /*html*/
     template: `

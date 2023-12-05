@@ -1,5 +1,5 @@
-import userList from "../components/UserList.js"
-import userInfoModal from "../components/UserInfoModal.js"
+import userList from "../components/User/UserList.js"
+import userInfoModal from "../components/User/UserInfoModal.js"
 export default {
     /*html*/
     template: `
