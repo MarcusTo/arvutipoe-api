@@ -1,5 +1,6 @@
 import confirmationModal from "../ConfirmationModal.js"
-
+import ProductForm from "./ProductForm.js"
+import ProductDetails from "./ProductDetails.js"
 export default {
     /*html*/
     template: `
@@ -10,22 +11,8 @@ export default {
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <table class="table table-striped">
-                    <tr>
-                        <th>Id</th>
-                        <td>{{productInModal.id}}</td>
-                    </tr>
-                    <tr>
-                        <th>Name</th>
-                        <td v-if="isEditing"><input v-model="modifiedProduct.name"></td>
-                        <td v-else>{{productInModal.name}}</td>
-                    </tr>
-                    <tr>
-                        <th>Price</th>
-                        <td v-if="isEditing"><input v-model="modifiedProduct.price"></td>
-                        <td v-else>{{productInModal.price}}</td>
-                    </tr>
-                </table>
+            <product-form v-if="isEditing" v-model:id="modifiedProduct.id" v-model:name="modifiedProduct.name" v-model:price="modifiedProduct.price" v-model:productAmount="modifiedProduct.productAmount"></product-form>
+            <product-details v-else :productInModal="productInModal"></product-details>
             </div>
 
             <div class="modal-footer">
@@ -56,7 +43,9 @@ export default {
 <confirmation-modal :target="'#productInfoModal'" @confirmed="deleteProduct"></confirmation-modal>
     `,
     components: {
-        confirmationModal
+        confirmationModal,
+        ProductForm,
+        ProductDetails
     },
     emits: ["productUpdated"],
     props: {

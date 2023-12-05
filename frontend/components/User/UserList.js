@@ -11,9 +11,10 @@ export default {
         </thead>
         <tbody>
         <tr v-for="user in users">
-            <td @click="getUser(user.id)">{{user.name}}</td>
-            <td>{{user.email}}</td>
-            <td>{{user.phoneNumber}}</td>
+            <td @click="getUser(user.id)">{{users.id}}</td>
+            <td>{{users.email}}</td>
+            <td>{{users.name}}</td>
+            <td>{{users.phoneNumber}}</td>
         </tr>
         </tbody>
     </table>

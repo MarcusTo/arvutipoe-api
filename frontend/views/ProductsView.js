@@ -1,19 +1,32 @@
 import productList from "../components/Product/ProductList.js"
 import productInfoModal from "../components/Product/ProductInfoModal.js"
+import newObjectModal from "../components/NewObjectModal.js"
+import ProductForm from "../components/Product/ProductForm.js"
+
 export default {
     /*html*/
     template: `
-    <product-list :key="update" @showModal="openModal"></product-list>
+    <button class="btn btn-secondary" @click="newProduct">New Product</button>
+    <products-list :key="update" @showModal="openModal"></products-list>
     <product-info-modal @productUpdated="updateView" :productInModal="productInModal"></product-info-modal>
+    <new-object-modal id="newProductModal" @save="saveNewProduct">
+        <product-form v-model:name="productInModal.name" v-model:price="productInModal.price" 
+        v-model:productAmount="productInModal.productAmount"></product-form>
+        <div class="alert alert-danger" role="alert" v-show="error">{{error}}</div>
+    </new-object-modal>
     `,
     components: {
         productList,
-        productInfoModal
+        productInfoModal,
+        newObjectModal,
+        ProductForm,
     },
     data() {
         return {
             update: 0,
-            productInModal: { id: "", name: "", price: ""}
+            productInModal: { id: "", name: "", price: "", productAmount:""},
+            newProductModal: {},
+            error:""
         }
     },
     methods: {
@@ -22,9 +35,34 @@ export default {
             let productInfoModal = new bootstrap.Modal(document.getElementById("productInfoModal"))
             productInfoModal.show()
         },
+        newProduct() {
+            this.error = ""
+            this.productInModal = {}
+            this.newProductModal = new bootstrap.Modal(document.getElementById("newProductModal"))
+            this.newProductModal.show()
+        },
         updateView(product) {
             this.update++
             this.productInModal = product
+        },
+        async saveNewProduct() {
+            console.log("Saving:", this.productInModal)
+            const rawResponse = await fetch(this.API_URL + "/products/", {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(this.productInModal)
+            });
+            if (rawResponse.ok) {
+                this.newProductModal.hide()
+                this.update++
+            }
+            else {
+                const errorResponse = await rawResponse.json()
+                this.error = errorResponse.error
+            }
         }
     }
 }
