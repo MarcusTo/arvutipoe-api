@@ -13,7 +13,7 @@ export default {
     data() {
         return {
             update: 0,
-            orderInModal: { id: "", price:"" , productId:"", userId:""}
+            orderInModal: { id: "", price:"", productAmount:"", productId:"", userId:""}
         }
     },
     methods: {

@@ -16,19 +16,22 @@ export default {
                         <td>{{orderInModal.id}}</td>
                     </tr>
                     <tr>
-                        <th>Name</th>
-                        <td v-if="isEditing"><input v-model="modifiedOrder.name"></td>
-                        <td v-else>{{orderInModal.name}}</td>
+                        <th>userId</th>
+                        <td>{{orderInModal.userId}}</td>
                     </tr>
                     <tr>
-                        <th>Email</th>
-                        <td v-if="isEditing"><input v-model="modifiedOrder.name"></td>
-                        <td v-else>{{orderInModal.email}}</td>
+                        <th>productId</th>
+                        <td>{{orderInModal.productId}}</td>
                     </tr>
                     <tr>
                         <th>Price</th>
                         <td v-if="isEditing"><input v-model="modifiedOrder.price"></td>
                         <td v-else>{{orderInModal.price}}</td>
+                    </tr>
+                    <tr>
+                        <th>ProductAmount</th>
+                        <td v-if="isEditing"><input v-model="modifiedOrder.productAmount"></td>
+                        <td v-else>{{orderInModal.productAmount}}</td>
                     </tr>
                 </table>
             </div>
@@ -83,7 +86,7 @@ export default {
         },
         async saveModifiedOrder() {
             console.log("Saving:", this.modifiedOrder);
-            const rawResponse = await fetch(this.API_URL + "/ordrs/" + this.modifiedOrder.id, {
+            const rawResponse = await fetch(this.API_URL + "/orders/" + this.modifiedOrder.id, {
                 method: 'PUT',
                 headers: {
                     'Accept': 'application/json',

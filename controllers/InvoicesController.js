@@ -8,7 +8,7 @@ exports.createNew = async (req, res) => {
         return res.status(400).send({ error: "Required parameter 'id' is missing" });
     }
     const createdInvoice = await invoices.create({ ...req.body }, {
-        fields: ["id", "price", "orderId", "userId"]
+        fields: ["id", "orderId", "userId", "price" ]
     });
     res.status(201)
         .location(`${getBaseurl(req)}/invoices/${createdInvoice.id}`)
@@ -17,7 +17,7 @@ exports.createNew = async (req, res) => {
 
 // READ
 exports.getAll = async (req, res) => {
-    const result = await invoices.findAll({ attributes: ["id", "orderId", "price", "userId"], include: [User] });
+    const result = await invoices.findAll({ attributes: ["id", "orderId", "userId", "price" ], include: [User] });
     res.json(result);
 };
 
@@ -33,7 +33,7 @@ exports.getById = async (req, res) => {
 exports.editById = async (req, res) => {
     const updateResult = await invoices.update({ ...req.body }, {
         where: { id: req.params.id },
-        fields: ["id", "orderId", "price", "userId"] // Remove the empty string
+        fields: ["id", "orderId", "userId", "price" ] 
     });
     if (updateResult[0] == 0) {
         return res.status(404).send({ error: "Invoice not found" });

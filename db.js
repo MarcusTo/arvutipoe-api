@@ -17,66 +17,86 @@ try {
 const db = {}
 db.Sequelize = Sequelize
 db.connection = sequelize
+
 db.users = require("./models/User")(sequelize, Sequelize)
 db.products = require("./models/Product")(sequelize, Sequelize)
+
 db.ProductBuyers = require("./models/ProductBuyers")(sequelize, Sequelize, db.products, db.users)
-db.order = require("./models/Order")(sequelize, Sequelize, db.users, db.products)
+db.order = require("./models/Order")(sequelize, Sequelize, db.products)
 db.invoice = require("./models/Invoice")(sequelize, Sequelize, db.users, db.order)
+
 db.products.belongsToMany(db.users, { through: db.ProductBuyers })
 db.users.belongsToMany(db.products, { through: db.ProductBuyers })
+
 db.products.hasMany(db.ProductBuyers)
 db.users.hasMany(db.ProductBuyers)
+
 db.ProductBuyers.belongsTo(db.products)
 db.ProductBuyers.belongsTo(db.users)
 
 sync = async () => {
-    if (process.env.DROP_DB === "true") {
-        console.log("Begin DROP")
-        await db.connection.query('SET FOREIGN_KEY_CHECKS = 0')
-        console.log("Checks disabled")
-        await db.connection.sync({ force: true })
-        console.log('Database synchronised.')
-        await db.connection.query('SET FOREIGN_KEY_CHECKS = 1')
-        console.log("Checks enabled")
+    try {
+        if (process.env.DROP_DB === "true") {
+            console.log("Begin DROP");
+            await db.connection.query('SET FOREIGN_KEY_CHECKS = 0');
+            console.log("Checks disabled");
 
-        const [product, createdP] = await db.products.findOrCreate({
-            where: {
-                name: "1Of1"
-            },
-            defaults: {
-                name: "1Of1",
-                price: 3000,
-            }
-        })
-        console.log("product created: ", createdP, product.id)
+            await db.connection.sync({ force: true });
+            console.log('Database synchronized.');
 
-        const [user, createdU] = await db.users.findOrCreate({
-            where: {
-                name: "MarcusTo"
-            },
-            defaults: {
-                name: "MarcusTo"
-            }
-        })
-        console.log("User created: ", createdU, user.id)
+            const [product, createdP] = await db.products.findOrCreate({
+                where: {
+                    name: "1Of1"
+                },
+                defaults: {
+                    name: "1Of1",
+                    price: 3000,
+                }
+            });
+            console.log("Product created:", createdP, product.id);
 
-        const [order, createdPU] = await db.order.findOrCreate({
-            where: {
-                id: 1
-            },
-            defaults: {
-                userId: user.id,
-                productId: product.id,
-                price: 3000
-            }
-        })
-        console.log("Order created: ", createdPU)
+            const [user, createdU] = await db.users.findOrCreate({
+                where: {
+                    name: "MarcusTo"
+                },
+                defaults: {
+                    name: "MarcusTo"
+                }
+            });
+            console.log("User created:", createdU, user.id);
+
+            const [order, createdPU] = await db.order.findOrCreate({
+                where: {
+                    id: 1
+                },
+                defaults: {
+                    userId: user.id,
+                    productId: product.id,
+                    price: 1600
+                }
+            });
+            console.log("Order created:", createdPU);
+
+            // Create Invoice
+            const [invoice, createdI] = await db.invoice.findOrCreate({
+                where: {
+                    orderId: order.id,
+                    userId: user.id,
+                    price: 1600
+                }
+            });
+            console.log("Invoice created:", createdI, invoice.id);
+
+            await db.connection.query('SET FOREIGN_KEY_CHECKS = 1');
+            console.log("Checks enabled");
+        } else {
+            console.log("Begin ALTER");
+            await db.connection.sync({ alter: true }); // Alter existing to match the model
+            console.log('Database synchronized.');
+        }
+    } catch (error) {
+        console.error('Error during synchronization:', error);
     }
-    else {
-        console.log("Begin ALTER")
-        await db.connection.sync({ alter: true }) // Alter existing to match the model
-        console.log('Database synchronised.')
-    }
-}
+};
 
-module.exports = { db, sync }
+module.exports = { db, sync };

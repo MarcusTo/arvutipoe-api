@@ -5,25 +5,18 @@ module.exports = (dbConnection, Sequelize) => {
             primaryKey: true,
             autoIncrement: true
         },
+        email: {
+            type: Sequelize.STRING
+        },
         name: {
             type: Sequelize.STRING,
             allowNull: false
         },
-        email: {
-            type: Sequelize.STRING
-        },
+        
         phoneNumber: {
             type: Sequelize.INTEGER
             
-        },
-        // UserId:{
-        //     type: Sequelize.INTEGER,
-        //     allowNull: false,
-        //     references: {
-        //         model: Product,
-        //         key: "id"
-        //     }
-        // }
+        }
     })
     return User
 }

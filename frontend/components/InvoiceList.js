@@ -4,18 +4,15 @@ export default {
     <table id="invoicesTable" class="table table-striped table-bordered">
       <thead>
         <tr>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Phone</th>
+          <th>Id</th>
+          <th>OrderId</th>
+          <th>UserId</th>
           <th>Price</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="invoice in invoices" >
-          <td @click="getInvoice(user.id)">{{ invoice.user.name }}</td>
-          <td>{{ invoice.user.email }}</td>
-          <td>{{ invoice.user.phoneNumber }}</td>
-          <td>{{ invoice.price }}</td>
+        
         </tr>
       </tbody>
     </table>
@@ -38,3 +35,9 @@ export default {
     },
   },
 };
+
+/* <td @click="getInvoice(user.id)">{{ invoice.user.name }}</td> */
+5
+/* <td>{{ invoice.user.email }}</td>
+          <td>{{ invoice.user.phoneNumber }}</td>
+          <td>{{ invoice.price }}</td> */
