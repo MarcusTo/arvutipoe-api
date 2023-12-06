@@ -7,7 +7,7 @@ export default {
     /*html*/
     template: `
     <button class="btn btn-secondary" @click="newProduct">New Product</button>
-    <product-list :key="update" @showModal="openModal"></product-list>
+    <product-list :key="update" @showModal="openModal" @deleteProduct="deleteProduct"></product-list>
     <product-info-modal @productUpdated="updateView" :productInModal="productInModal"></product-info-modal>
     <new-object-modal id="newProductModal" @save="saveNewProduct">
         <product-form v-model:name="productInModal.name" v-model:price="productInModal.price" 
@@ -45,24 +45,20 @@ export default {
             this.update++
             this.productInModal = product
         },
-        async saveNewProduct() {
-            console.log("Saving:", this.productInModal)
-            const rawResponse = await fetch(this.API_URL + "/products/", {
-                method: 'POST',
+        async saveModifiedProduct() {
+            console.log("Saving:", this.modifiedProduct);
+            const rawResponse = await fetch(this.API_URL + "/products/" + this.modifiedProduct.id, {
+                method: 'PUT',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(this.productInModal)
+                body: JSON.stringify(this.modifiedProduct)
             });
-            if (rawResponse.ok) {
-                this.newProductModal.hide()
-                this.update++
-            }
-            else {
-                const errorResponse = await rawResponse.json()
-                this.error = errorResponse.error
-            }
+            console.log(rawResponse);
+            this.$emit("productUpdated", this.modifiedProduct)
+            this.isEditing = false
         }
+
     }
 }

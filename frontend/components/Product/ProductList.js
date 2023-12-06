@@ -14,7 +14,7 @@ export default {
                 <td @click="getProduct(product.id)">{{ product.name }}</td>
                 <td>{{ product.price }}</td>
                 <td>{{ product.productAmount }}</td>
-                
+
             </tr>
         </tbody>
     </table>

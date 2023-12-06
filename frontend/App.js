@@ -31,6 +31,4 @@ export default {
   </nav> 
     <router-view></router-view>
     `,
-    components: {
-    }
 }

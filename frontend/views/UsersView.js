@@ -6,8 +6,8 @@ import UserForm from "../components/User/UserForm.js"
 export default {
     /*html*/
     template: `
-    <button class="btn btn-secondary" @click="newProduct">New User</button>
-    <users-list :key="update" @showModal="openModal"></users-list>
+    <button class="btn btn-secondary" @click="newUser">New User</button>
+    <user-list :key="update" @showModal="openModal"></user-list>
     <user-info-modal @productUpdated="updateView" :productInModal="userInModal"></user-info-modal>
     <new-object-modal id="newUserModal" @save="saveNewUser">
         <user-form v-model:email="userInModal.email" v-model:name="userInModal.name" 
@@ -18,8 +18,9 @@ export default {
     components: {
         userList,
         userInfoModal,
+        newObjectModal,
         UserForm,
-        newObjectModal
+        
     },
     data() {
         return {

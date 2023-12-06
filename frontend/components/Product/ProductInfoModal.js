@@ -12,9 +12,8 @@ export default {
             </div>
             <div class="modal-body">
             <product-form v-if="isEditing" v-model:id="modifiedProduct.id" v-model:name="modifiedProduct.name" v-model:price="modifiedProduct.price" v-model:productAmount="modifiedProduct.productAmount"></product-form>
-            <product-details v-else :productInModal="productInModal"></product-details>
+            <product-details v-else v-model:productInModal="productInModal"></product-details>
             </div>
-
             <div class="modal-footer">
                 <div class="container">
                     <div class="row">
@@ -40,14 +39,15 @@ export default {
         </div>
     </div>
 </div>
-<confirmation-modal :target="'#productInfoModal'" @confirmed="deleteProduct"></confirmation-modal>
-    `,
+<confirmation-modal :target="'#productInfoModal'" @confirmed="deleteProduct" @canceldelete="cancelEditing"></confirmation-modal>
+
+`,
     components: {
         confirmationModal,
         ProductForm,
         ProductDetails
     },
-    emits: ["productUpdated"],
+    emits: ["productUpdated","confirmationModal","deleteProduct"],
     props: {
         productInModal: {}
     },
@@ -80,7 +80,13 @@ export default {
             this.isEditing = false
         },
         deleteProduct() {
-            console.log("DELETE confirmed");
+            console.log("Deleting:", this.productInModal);
+            fetch(this.API_URL + "/products/" + this.productInModal.id, {
+                method: 'DELETE'
+            });
+                this.$emit("productUpdated",{})
+                this.isEditing = false
         }
+        
     }
 }

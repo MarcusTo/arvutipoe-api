@@ -19,9 +19,6 @@ export default {
         <th>Name</th>
 
         <td><input :value="name" @input="$emit('update:name',$event.target.value)"></td>
-
-
-
     </tr>
 
     <tr>
