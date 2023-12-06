@@ -7,7 +7,7 @@ export default {
     /*html*/
     template: `
     <button class="btn btn-secondary" @click="newProduct">New Product</button>
-    <products-list :key="update" @showModal="openModal"></products-list>
+    <product-list :key="update" @showModal="openModal"></product-list>
     <product-info-modal @productUpdated="updateView" :productInModal="productInModal"></product-info-modal>
     <new-object-modal id="newProductModal" @save="saveNewProduct">
         <product-form v-model:name="productInModal.name" v-model:price="productInModal.price" 
