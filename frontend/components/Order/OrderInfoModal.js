@@ -80,7 +80,12 @@ export default {
             this.isEditing = false
         },
         deleteOrder() {
-            console.log("DELETE confirmed");
+            console.log("Deleting:", this.orderInModalInModal);
+            fetch(this.API_URL + "/products/" + this.orderInModal.id, {
+                method: 'DELETE'
+            });
+                this.$emit("orderUpdated",{})
+                this.isEditing = false
         }
     }
 }

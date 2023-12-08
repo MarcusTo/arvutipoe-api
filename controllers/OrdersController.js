@@ -14,13 +14,11 @@ exports.createNew = async (req, res) => {
         .location(`${getBaseurl(req)}/orders/${createdOrder.id}`)
         .send(createdOrder);
 };
-
 // READ
 exports.getAll = async (req, res) => {
     const result = await orders.findAll({ attributes: ["id", "productId","price","productAmount" ] })
     res.json(result);
 };
-
 exports.getById = async (req, res) => {
     const foundOrder = await orders.findByPk(req.params.id);
     if (foundOrder === null) {
@@ -28,7 +26,6 @@ exports.getById = async (req, res) => {
     }
     res.json(foundOrder);
 };
-
 // UPDATE
 exports.editById = async (req, res) => {
     const updateResult = await orders.update({ ...req.body }, {
@@ -42,7 +39,6 @@ exports.editById = async (req, res) => {
         .location(`${getBaseurl(req)}/orders/${req.params.id}`)
         .send();
 };
-
 // DELETE
 exports.deleteById = async (req, res) => {
     const deletedAmount = await orders.destroy({

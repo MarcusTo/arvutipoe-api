@@ -8,7 +8,7 @@ exports.createNew = async (req, res) => {
         return res.status(400).send({ error: "One or all required parameters are missing" })
     }
     const createdProduct = await products.create(req.body, {
-        fields: ["name", "price","productAmount"]
+        fields: ["name", "price", "productAmount"]
     })
     res.status(201)
         .location(`${getBaseurl(req)}/products/${createdProduct.id}`)
@@ -22,7 +22,7 @@ exports.getAll = async (req, res) => {
 exports.getById = async (req, res) => {
     const foundProduct = await products.findByPk(req.params.id)
     if (foundProduct === null) {
-        return res.status(404).send({ error: `Product not found` })
+        return res.status(404).send({ error: `Product not found`})
     }
     res.json(foundProduct)
 }
