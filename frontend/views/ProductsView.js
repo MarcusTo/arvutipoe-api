@@ -25,14 +25,16 @@ export default {
     data() {
         return {
             update: 0,
-            productInModal: { id: "", name: "", price: "",  productAmount: ""}
+            productInModal: { id: "", name: "", price: "",  productAmount: ""},
+            newBarberModal: {},
+            error: ""
         }
     },
     methods: {
         openModal(product){
             this.productInModal = product
-            let productInModal = new bootstrap.Modal(document.getElementById("productInModal"))
-            productInModal.show()
+            let productInfoModal = new bootstrap.Modal(document.getElementById("productInfoModal"))
+            productInfoModal.show()
         },
         newProduct() {
             this.error = ""
@@ -42,7 +44,7 @@ export default {
         },
         updateView(product) {
             this.update++
-            this.newProductModal = product
+            this.productInModal = product
         },
         async saveNewProduct() {
             console.log("Saving:", this.productInModal)
