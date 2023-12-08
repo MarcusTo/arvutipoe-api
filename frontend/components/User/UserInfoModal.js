@@ -1,6 +1,6 @@
 import confirmationModal from "../ConfirmationModal.js"
-import UserForm from "./UserForm.js"
-import UserDetails from "./UserDetails.js"
+import userForm from "./UserForm.js"
+import userDetails from "./UserDetails.js"
 export default {
     /*html*/
     template: `
@@ -11,7 +11,7 @@ export default {
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-            <user-form v-if="isEditing" v-model:id="modifiedUser.id" v-model:name="modifiedUser.name" v-model:price="modifiedUser.price" v-model:userAmount="modifiedUser.productAmount"></user-form>
+            <user-form v-if="isEditing" v-mo v-model:name="modifiedUser.name" v-model:price="modifiedUser.price" v-model:userAmount="modifiedUser.productAmount" :isEditing="true"></user-form>
             <user-details v-else v-model:userInModal="userInModal"></user-details>
             </div>
             <div class="modal-footer">
@@ -44,10 +44,10 @@ export default {
 `,
     components: {
         confirmationModal,
-        UserForm,
-        UserDetails
+        userForm,
+        userDetails
     },
-    emits: ["userUpdated","confirmationModal","deleteUser"],
+    emits: ["userUpdated"],
     props: {
         userInModal: {}
     },
