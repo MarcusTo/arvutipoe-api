@@ -18,7 +18,6 @@ export default {
             <th>Phone</th>
             <td >{{userInModal.phoneNumber}}</td>
         </tr>
-    </table>
-    `,
+    </table>`,
     props:["userInModal"]
 }

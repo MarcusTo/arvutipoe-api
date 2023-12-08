@@ -1,6 +1,6 @@
 import confirmationModal from "../ConfirmationModal.js"
-import ProductForm from "./ProductForm.js"
-import ProductDetails from "./ProductDetails.js"
+import productForm from "./ProductForm.js"
+import productDetails from "./ProductDetails.js"
 export default {
     /*html*/
     template: `
@@ -11,7 +11,7 @@ export default {
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-            <product-form v-if="isEditing" v-model:id="modifiedProduct.id" v-model:name="modifiedProduct.name" v-model:price="modifiedProduct.price" v-model:productAmount="modifiedProduct.productAmount"></product-form>
+            <product-form v-if="isEditing" v-mo v-model:name="modifiedProduct.name" v-model:price="modifiedProduct.price" v-model:productAmount="modifiedProduct.productAmount" :isEditing="true"></product-form>
             <product-details v-else v-model:productInModal="productInModal"></product-details>
             </div>
             <div class="modal-footer">
@@ -44,10 +44,10 @@ export default {
 `,
     components: {
         confirmationModal,
-        ProductForm,
-        ProductDetails
+        productForm,
+        productDetails
     },
-    emits: ["productUpdated","confirmationModal","deleteProduct"],
+    emits: ["productUpdated"],
     props: {
         productInModal: {}
     },

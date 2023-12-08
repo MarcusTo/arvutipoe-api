@@ -11,7 +11,7 @@ export default {
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-            <user-form v-if="isEditing" v-mo v-model:name="modifiedUser.name" v-model:price="modifiedUser.price" v-model:userAmount="modifiedUser.productAmount" :isEditing="true"></user-form>
+            <user-form v-if="isEditing" v-mo v-model:name="modifiedUser.name" v-model:email="modifiedUser.email" v-model:phoneNumber="modifiedUser.phoneNumber" :isEditing="true"></user-form>
             <user-details v-else v-model:userInModal="userInModal"></user-details>
             </div>
             <div class="modal-footer">

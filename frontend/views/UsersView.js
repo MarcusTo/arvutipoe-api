@@ -8,7 +8,7 @@ export default {
     template: `
     <button class="btn btn-secondary" @click="newUser">New User</button>
     <user-list :key="update" @showModal="openModal" @deleteUser="deleteUser">></user-list>
-    <user-info-modal @userUpdated="updateView" :userInModal="userInModal"></user-info-modal>
+    <user-info-modal @Updated="updateView" :userInModal="userInModal"></user-info-modal>
     <new-object-modal id="newUserModal" @save="saveNewUser">
         <user-form v-model:email="userInModal.email" v-model:name="userInModal.name" 
         v-model:phoneNumber="userInModal.phoneNumber"></user-form>
