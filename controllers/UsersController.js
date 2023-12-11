@@ -3,17 +3,17 @@ const users = db.users
 const { getBaseurl } = require("./helpers")
 
 // CREATE
-exports.createNew = async (req, res) => {
-    if (!req.body.name) {
-        return res.status(400).send({ error: "Required parameter 'name' is missing" })
-    }
-    const createdUser = await users.create({ ...req.body }, {
-        fields: ["name", "email", "phoneNumber"]
-    })
-    res.status(201)
-        .location(`${getBaseurl(req)}/users/${createdUser.id}`)
-        .send(createdUser)
-}
+// exports.createNew = async (req, res) => {
+//     if (!req.body.name) {
+//         return res.status(400).send({ error: "Required parameter 'name' is missing" })
+//     }
+//     const createdUser = await users.create({ ...req.body }, {
+//         fields: ["name", "email", "phoneNumber"]
+//     })
+//     res.status(201)
+//         .location(`${getBaseurl(req)}/users/${createdUser.id}`)
+//         .send(createdUser)
+// }
 // READ
 exports.getAll = async (req, res) => {
     const result = await users.findAll({ attributes: ["id", "name", "email", "phoneNumber"] })

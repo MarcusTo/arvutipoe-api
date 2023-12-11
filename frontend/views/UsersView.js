@@ -6,7 +6,7 @@ import userForm from "../components/User/UserForm.js"
 export default {
     /*html*/
     template: `
-    <button class="btn btn-secondary" @click="newUser">New User</button>
+    //<button class="btn btn-secondary" @click="newUser">New User</button>
     <user-list :key="update" @showModal="openModal" @deleteUser="deleteUser">></user-list>
     <user-info-modal @Updated="updateView" :userInModal="userInModal"></user-info-modal>
     <new-object-modal id="newUserModal" @save="saveNewUser">
