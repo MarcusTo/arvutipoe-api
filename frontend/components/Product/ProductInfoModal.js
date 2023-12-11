@@ -17,15 +17,15 @@ export default {
             <div class="modal-footer">
                 <div class="container">
                     <div class="row">
-                        <template v-if="isEditing">
-                            <div class="col me-auto">
-                                <button type="button" class="btn btn-danger" data-bs-target="#confirmationModal" data-bs-toggle="modal">Delete</button>
-                            </div>
-                            <div class="col-auto">
-                                <button type="button" class="btn btn-success mx-2" @click="saveModifiedProduct">Save</button>
-                                <button type="button" class="btn btn-secondary" @click="cancelEditing">Cancel</button>
-                            </div>
-                        </template>
+                        //<template v-if="isEditing">
+                        //    <div class="col me-auto">
+                        //        <button type="button" class="btn btn-danger" data-bs-target="#confirmationModal" data-bs-toggle="modal">Delete</button>
+                        //    </div>
+                        //    <div class="col-auto">
+                        //        <button type="button" class="btn btn-success mx-2" @click="saveModifiedProduct">Save</button>
+                        //        <button type="button" class="btn btn-secondary" @click="cancelEditing">Cancel</button>
+                        //    </div>
+                        //</template>
                         <template v-else>
                             <div class="col me-auto"></div>
                             <div class="col-auto">

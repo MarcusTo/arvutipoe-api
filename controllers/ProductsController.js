@@ -40,12 +40,12 @@ exports.editById = async (req, res) => {
         .send()
 }
 // DELETE
-exports.deleteById = async (req, res) => {
-    const deletedAmount = await products.destroy({
-        where: { id: req.params.id }
-    })
-    if (deletedAmount === 0) {
-        return res.status(404).send({ error: "Product not found" })
-    }
-    res.status(204).send()
-}
+//exports.deleteById = async (req, res) => {
+//    const deletedAmount = await products.destroy({
+//       where: { id: req.params.id }
+//    })
+//    if (deletedAmount === 0) {
+//        return res.status(404).send({ error: "Product not found" })
+//    }
+//    res.status(204).send()
+//}
