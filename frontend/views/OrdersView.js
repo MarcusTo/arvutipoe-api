@@ -1,36 +1,34 @@
 import orderList from "../components/Order/OrderList.js"
 import orderInfoModal from "../components/Order/OrderInfoModal.js"
-import OrderForm from "../components/Order/OrderForm.js"
-import NewObjectModal from "../components/NewObjectModal.js"
-
+import newObjectModal from "../components/NewObjectModal.js"
+import orderForm from "../components/Order/OrderForm.js"
 export default {
     /*html*/
     template: `
     <button class="btn btn-secondary" @click="newOrder">New Order</button>
-    <order-list :key="update" @showModal="openModal" @deleteOrder="deleteOrder">></order-list>
-    <order-info-modal @Updated="updateView" :orderInModal="orderInModal"></order-info-modal>
+    <order-list :key="update" @showModal="openModal"></order-list>
+    <order-info-modal @orderUpdated="updateView" :orderInModal="orderInModal"></order-info-modal>
     <new-object-modal id="newOrderModal" @save="saveNewOrder">
-        <order-form v-model:name="orderInModal.name" v-model:price="orderInModal.price" 
-        v-model:orderAmount="orderInModal.orderAmount"></order-form>
+        <order-form v-model:price="orderInModal.price" v-model:productAmount="orderInModal.productAmount" v-model:productId="orderInModal.productId" v-model:userId="orderInModal.userId"></order-form>
         <div class="alert alert-danger" role="alert" v-show="error">{{error}}</div>
     </new-object-modal>
     `,
     components: {
         orderList,
         orderInfoModal,
-        NewObjectModal,
-        OrderForm,
+        newObjectModal,
+        orderForm
     },
     data() {
         return {
             update: 0,
-            orderInModal: {name: "", price: "",  productAmount: ""},
+            orderInModal: { id: "", price: "", productAmount:"", productId: "", userId: ""},
             newOrderModal: {},
             error: ""
         }
     },
     methods: {
-        openModal(order){
+        openModal(order) {
             this.orderInModal = order
             let orderInfoModal = new bootstrap.Modal(document.getElementById("orderInfoModal"))
             orderInfoModal.show()
@@ -47,7 +45,7 @@ export default {
         },
         async saveNewOrder() {
             console.log("Saving:", this.orderInModal)
-            const rawResponse = await fetch(this.API_URL + "/Orders/", {
+            const rawResponse = await fetch(this.API_URL + "/orders/", {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',

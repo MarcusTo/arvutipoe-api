@@ -20,7 +20,7 @@ export default {
         </tr>
         <tr>
             <th>Product</th>
-            <td >{{prodcut}}</td>
+            <td >{{product}}</td>
         </tr>
     </table>
     `,
