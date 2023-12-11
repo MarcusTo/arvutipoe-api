@@ -18,9 +18,9 @@ export default {
                 <div class="container">
                     <div class="row">
                         <template v-if="isEditing">
-                            <div class="col me-auto">
-                                <button type="button" class="btn btn-danger" data-bs-target="#confirmationModal" data-bs-toggle="modal">Delete</button>
-                            </div>
+                            // <div class="col me-auto">
+                            //     <button type="button" class="btn btn-danger" data-bs-target="#confirmationModal" data-bs-toggle="modal">Delete</button>
+                            // </div>
                             <div class="col-auto">
                                 <button type="button" class="btn btn-success mx-2" @click="saveModifiedUser">Save</button>
                                 <button type="button" class="btn btn-secondary" @click="cancelEditing">Cancel</button>
