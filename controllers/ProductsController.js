@@ -15,17 +15,17 @@ exports.createNew = async (req, res) => {
         .json(createdProduct)
 }
 // READ
-exports.getAll = async (req, res) => {
-    const result = await products.findAll({ attributes: ["id", "name","price","productAmount"] })
-    res.json(result)
-}
-exports.getById = async (req, res) => {
-    const foundProduct = await products.findByPk(req.params.id)
-    if (foundProduct === null) {
-        return res.status(404).send({ error: `Product not found`})
-    }
-    res.json(foundProduct)
-}
+// exports.getAll = async (req, res) => {
+//     const result = await products.findAll({ attributes: ["id", "name","price","productAmount"] })
+//     res.json(result)
+// }
+// exports.getById = async (req, res) => {
+//     const foundProduct = await products.findByPk(req.params.id)
+//     if (foundProduct === null) {
+//         return res.status(404).send({ error: `Product not found`})
+//     }
+//     res.json(foundProduct)
+// }
 // UPDATE
 exports.editById = async (req, res) => {
     const updateResult = await products.update({ ...req.body }, {
