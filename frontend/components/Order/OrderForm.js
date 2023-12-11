@@ -4,19 +4,16 @@ export default {
     <table class="table table-striped">
 
       <tr>
-        <th>Id</th>
         <td>{{id}}</td>
       </tr>
+
       <tr>
-        <th>Price</th>
-        <td><input type="number" :value="price" @input="$emit('update:price',$event.target.value)"></td>
-      <tr>
-      <tr>
-        <th>Product Amount</th>
+        <th>Product Amount:</th>
         <td><input type="number" :value="productAmount" @input="$emit('update:productAmount',$event.target.value)"></td>
       <tr>
+
       <tr>
-        <th>User</th>
+        <th>User:</th>
         <td>
             <select :value="userId" @input="$emit('update:userId',$event.target.value)">
                 <option v-for="user in users" :value="user.id">{{user.name}}</option>
@@ -24,7 +21,7 @@ export default {
         </td>
       </tr>
       <tr>
-        <th>Product</th>
+        <th>Product:</th>
         <td>
             <select :value="productId" @input="$emit('update:productId',$event.target.value)">
                 <option v-for="product in products" :value="product.id">{{product.name}}</option>

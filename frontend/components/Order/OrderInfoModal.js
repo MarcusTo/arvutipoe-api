@@ -69,7 +69,7 @@ export default {
     },
     async created() {
         this.users  = await (await fetch("http://localhost:8080/users")).json()
-        this.products = await (await fetch("http://localhost:1025/products")).json()
+        this.products = await (await fetch("http://localhost:8080/products")).json()
     },
     data() {
         return {

@@ -4,17 +4,15 @@ export default {
     <table id=usersTable class="table table-striped table-bordered">
     <thead>
         <tr>
-            <th>User ID:</th>
-            <th>User Email:</th>
             <th>User Name:</th>
+            <th>User Email:</th>
             <th>User Phonenumber:</th>
         </tr>
         </thead>
         <tbody>
         <tr v-for="user in users">
-            <td @click="getUser(user.id)">{{user.id}}</td>
+            <td @click="getUser(user.id)">{{user.name}}</td>
             <td>{{user.email}}</td>
-            <td>{{user.name}}</td>
             <td>{{user.phoneNumber}}</td>
         </tr>
         </tbody>

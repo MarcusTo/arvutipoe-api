@@ -13,7 +13,6 @@ module.exports = (dbConnection, Sequelize) => {
             type: Sequelize.STRING,
             allowNull: false
         },
-        
         phoneNumber: {
             type: Sequelize.STRING,
             allownull: false
