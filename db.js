@@ -61,7 +61,7 @@ sync = async () => {
 
             const [order, createdPU] = await db.orders.findOrCreate({
                 where: {
-                    id: 1
+                    userId: 1
                 },
                 defaults: {
                     userId: user.id,
@@ -70,7 +70,7 @@ sync = async () => {
                     price: 1600
                 }
             })
-            console.log("Order created:", createdPU);
+            console.log("Order created:", createdPU, order.id);
 
 
             await db.connection.query('SET FOREIGN_KEY_CHECKS = 1');
