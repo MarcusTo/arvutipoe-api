@@ -4,9 +4,10 @@ export default {
     <table id=usersTable class="table table-striped table-bordered">
     <thead>
         <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Phone</th>
+            <th>User ID:</th>
+            <th>User Email:</th>
+            <th>User Name:</th>
+            <th>User Phonenumber:</th>
         </tr>
         </thead>
         <tbody>

@@ -2,28 +2,25 @@ export default{
     /*html*/
     template: `
     <table class="table table-striped">
+
     <tr>
-        <th>Id</th>
         <td>{{id}}</td>
     </tr>
     <tr>
-        <th>User Id</th>
-        <td>{{userId}}</td>
+        <th>Product ID:</th>
+        <input type="number" :value="productId" @input="$emit('update:productId', $event.target.value)">
     </tr>
+
     <tr>
-        <th>Product Id</th>
-        <td>{{productId}}</td>
+        <td>{{price}}</td>
     </tr>
+
     <tr>
-        <th>Price</th>
-        <td ><input :value="price" @input="$emit('update:price',$event.target.value)"></td>
-    </tr>
-    <tr>
-        <th>Product Amount</th>
-        <td><input :value="productAmount" @input="$emit('update:productAmount',$event.target.value)"></td>
+        <th>Product Amount:</th>
+        <td><input type="number" :value="productAmount" @input="$emit('update:productAmount',$event.target.value)"></td>
     </tr>
 </table>
     `,
-    props: ["id","userId","productId","price","productAmount"],
+    props: ["id", "userId","productId","price","productAmount"],
     emits: ["update:id","update:userId","update:productId","update:price","update:productAmount"]
 }

@@ -3,19 +3,19 @@ export default {
     template: `
     <table class="table table-striped">
     <tr>
-        <th>Id</th>
+        <th>Product ID:</th>
         <td>{{productInModal.id}}</td>
     </tr>
     <tr>
-        <th>Name</th>
+        <th>Product name:</th>
         <td>{{productInModal.name}}</td>
     </tr>
     <tr>
-        <th>Price</th>
+        <th>Product price:</th>
         <td>{{productInModal.price}}</td>
     </tr>
     <tr>
-        <th>Product Amount</th>
+        <th>Product amount:</th>
         <td>{{productInModal.productAmount}}</td>
     </tr>
 </table>`,

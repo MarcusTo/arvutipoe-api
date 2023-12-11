@@ -3,23 +3,23 @@ export default {
     template:`
     <table class="table table-striped">
         <tr>
-            <th>Id</th>
-            <td>{{orderInModal.id}}</td>
+            <th>Order ID:</th>
+            <td>{{orderInModal.orderId}}</td>
         </tr>
         <tr>
-            <th>User Id</th>
+            <th>User ID:</th>
             <td >{{orderInModal.userId}}</td>
         </tr>
         <tr>
-            <th>Product Id</th>      
+            <th>Product ID:</th>      
             <td >{{orderInModal.productId}}</td>
         </tr>
         <tr>
-            <th>Price</th>
+            <th>Order Price:</th>
             <td >{{orderInModal.price}}</td>
         </tr>
         <tr>
-            <th>Product Amount</th>
+            <th>Product Amount:</th>
             <td >{{orderInModal.productAmount}}</td>
         </tr>
     </table>

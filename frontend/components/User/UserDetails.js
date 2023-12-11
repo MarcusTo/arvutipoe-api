@@ -3,19 +3,19 @@ export default {
     template:`
     <table class="table table-striped">
         <tr>
-            <th>Id</th>
+            <th>User ID:</th>
             <td>{{userInModal.id}}</td>
         </tr>
         <tr>
-            <th>Email</th>
+            <th>User Email:</th>
             <td >{{userInModal.email}}</td>
         </tr>
         <tr>
-            <th>Email</th>      
+            <th>User Name:</th>      
             <td >{{userInModal.name}}</td>
         </tr>
         <tr>
-            <th>Phone</th>
+            <th>User Phonenumber:</th>
             <td >{{userInModal.phoneNumber}}</td>
         </tr>
     </table>`,

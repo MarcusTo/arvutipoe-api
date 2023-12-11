@@ -3,19 +3,18 @@ export default {
     template: `
     <table class="table table-striped">
     <tr>
-        <th>Id</th>
         <td>{{id}}</td>
     </tr>
     <tr>
-        <th>Name</th>
+        <th>Product Name:</th>
         <td><input type="text" :value="name" @input="$emit('update:name',$event.target.value)"></td>
     </tr>
     <tr>
-        <th>Price</th>
+        <th>Product Price:</th>
         <td><input type="number" :value="price" @input="$emit('update:price',$event.target.value)"></td>
     </tr>
     <tr>
-        <th>Product Amount</th>
+        <th>Product Amount:</th>
         <input type="number" :value="productAmount" @input="$emit('update:productAmount', $event.target.value)">
     </tr>
 

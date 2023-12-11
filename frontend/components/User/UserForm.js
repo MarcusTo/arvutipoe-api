@@ -3,7 +3,6 @@ export default{
     template: `
     <table class="table table-striped">
     <tr>
-        <th>Id</th>
         <td>{{id}}</td>
     </tr>
     <tr>
@@ -21,5 +20,5 @@ export default{
 </table>
     `,
     props: ["id","email","name","phoneNumber","isEditing"],
-    emits: ["update:email","update:name","update:phoneNumber"]
+    emits: ["update:email","update:name","update:phoneNumber"] 
 }

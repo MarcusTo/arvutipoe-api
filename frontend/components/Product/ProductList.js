@@ -4,17 +4,18 @@ export default {
     <table id="productsTable" class="table table-striped table-bordered">
         <thead>
             <tr>
-                <th>Name</th>
-                <th>Price</th>
-                <th>Product Amount</th>
+                <th>Product ID:</th>
+                <th>Product Name:</th>
+                <th>Product Price:</th>
+                <th>Product Amount:</th>
             </tr>
         </thead>
         <tbody>
             <tr v-for="product in products">
+                <td @click="getProduct(product.id)">{{ product.id }}</td>
                 <td @click="getProduct(product.id)">{{ product.name }}</td>
                 <td>{{ product.price }}</td>
                 <td>{{ product.productAmount }}</td>
-
             </tr>
         </tbody>
     </table>
