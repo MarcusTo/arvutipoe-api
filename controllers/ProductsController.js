@@ -27,18 +27,19 @@ exports.getById = async (req, res) => {
     res.json(foundProduct)
 }
 // UPDATE
-exports.editById = async (req, res) => {
-    const updateResult = await products.update({ ...req.body }, {
-        where: { id: req.params.id },
-        fields: ["name", "price", "productAmount"]
-    })
-    if (updateResult[0] == 0) {
-        return res.status(404).send({ error: "Product not found" })
-    }
-    res.status(204)
-        .location(`${getBaseurl(req)}/products/${req.params.id}`)
-        .send()
-}
+//exports.editById = async (req, res) => {
+//   const updateResult = await products.update({ ...req.body }, {
+//        where: { id: req.params.id },
+//        fields: ["name", "price", "productAmount"]
+//    })
+//    if (updateResult[0] == 0) {
+//        return res.status(404).send({ error: "Product not found" })
+//    }
+//    res.status(204)
+//       .location(`${getBaseurl(req)}/products/${req.params.id}`)
+//        .send()
+//}
+
 // DELETE
 exports.deleteById = async (req, res) => {
     const deletedAmount = await products.destroy({

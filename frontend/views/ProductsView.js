@@ -22,14 +22,14 @@ export default {
         productForm,
         
     },
-    data() {
-        return {
-            update: 0,
-            productInModal: { id: "", name: "", price: "",  productAmount: ""},
-            newBarberModal: {},
-            error: ""
-        }
-    },
+    //data() {
+    //    return {
+    //        update: 0,
+    //        productInModal: { id: "", name: "", price: "",  productAmount: ""},
+    //        newBarberModal: {},
+    //       error: ""
+    //    }
+    //},
     methods: {
         openModal(product){
             this.productInModal = product
