@@ -4,43 +4,45 @@ export default {
     <table class="table table-striped">
 
       <tr>
+        <th>Id</th>
         <td>{{id}}</td>
       </tr>
-
       <tr>
-      <th>User ID:</th>
+        <th>Price</th>
+        <td><input type="number" :value="price" @input="$emit('update:price',$event.target.value)"></td>
+      <tr>
+      <tr>
+        <th>Product Amount</th>
+        <td><input type="number" :value="productAmount" @input="$emit('update:productAmount',$event.target.value)"></td>
+      <tr>
+      <tr>
+        <th>User</th>
         <td>
-        <select v-model="userId" @change="$emit('update:userId', userId)">
-        <option v-for="user in userList" :key="user.id" :value="user.id">{{ order.userId }}</option></select>
+            <select :value="userId" @input="$emit('update:userId',$event.target.value)">
+                <option v-for="user in users" :value="user.id">{{user.name}}</option>
+            </select>
         </td>
       </tr>
-
       <tr>
-        <th>Product ID:</th>
+        <th>Product</th>
         <td>
-          <select v-model="productId" @change="$emit('update:productId', productId)">
-            <option v-for="product in productList" :key="product.id" :value="product.id">{{ product.id }}</option>
-          </select>
+            <select :value="productId" @input="$emit('update:productId',$event.target.value)">
+                <option v-for="product in products" :value="product.id">{{product.name}}</option>
+            </select>
         </td>
-      </tr>
-
-      <tr>
-        <td>{{price}}</td>
-      </tr>
-
-      <tr>
-        <th>Product Amount:</th>
-        <td><input type="number" :value="productAmount" @input="$emit('update:productAmount', $event.target.value)"></td>
-      </tr>
+    </tr>
     </table>
   `,
-  props: ["id", "userId", "productId", "price", "productAmount"],
-  emits: ["update:id", "update:userId", "update:productId", "update:price", "update:productAmount"],
+  props: ["id", "price", "productAmount", "userId", "productId" ],
+  emits: ["update:id", "update:price", "update:productAmount", "update:userId", "update:productId"  ],
   data() {
-    return {
-      userList: [], // Populate with user IDs
-      productList: [] // Populate with product IDs
-    };
-  },
-  // Other logic...
+    return{
+      users: [],
+      products: []
+    }
+},
+  async created() {
+    this.users  = await (await fetch("http://localhost:8080/users")).json()
+    this.products = await (await fetch("http://localhost:8080/products")).json()
+  }
 };

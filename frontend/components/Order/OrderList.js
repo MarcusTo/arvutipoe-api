@@ -1,23 +1,19 @@
 export default {
     /*html*/
     template: `
-    <table id=ordersTable class="table table-striped table-bordered">
+    <table id="ordersTable" class="table table-striped table-bordered">
     <thead>
         <tr>
-            <th>User ID:</th>
-            <th>Order ID:</th>
-            <th>Product ID:</th>
-            <th>Order Price:</th>
-            <th>Product Amount:</th>
+            <th>User</th>
+            <th>Product</th>
+            <th>Price</th>
         </tr>
         </thead>
         <tbody>
         <tr v-for="order in orders">
-            <td @click="getOrder(order.id)">{{order.id}}</td>
-            <td>{{order.userId}}</td>
-            <td>{{order.productId}}</td>
-            <td>{{order.price}}</td>
-            <td>{{order.productAmount}}</td>
+            <td @click="getOrder(order.id)">{{ order.User.name }}</td>
+            <td>{{ order.Product.name }}</td>
+            <td>{{ order.price }}</td>
         </tr>
         </tbody>
     </table>
@@ -32,7 +28,7 @@ export default {
         this.orders = await (await fetch("http://localhost:8080/orders")).json()
     },
     methods: {
-        getUser: async function (id) {
+        getOrder: async function (id) {
             const orderInModal = await (await fetch(this.API_URL + "/orders/" + id)).json()
             this.$emit("showModal", orderInModal)
         }

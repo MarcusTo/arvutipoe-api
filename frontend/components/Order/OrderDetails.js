@@ -3,16 +3,8 @@ export default {
     template:`
     <table class="table table-striped">
         <tr>
-            <th>Order ID:</th>
-            <td>{{orderInModal.orderId}}</td>
-        </tr>
-        <tr>
-            <th>User ID:</th>
-            <td >{{orderInModal.userId}}</td>
-        </tr>
-        <tr>
-            <th>Product ID:</th>      
-            <td >{{orderInModal.productId}}</td>
+            <th>Id</th>
+            <td>{{orderInModal.Id}}</td>
         </tr>
         <tr>
             <th>Order Price:</th>
@@ -22,7 +14,15 @@ export default {
             <th>Product Amount:</th>
             <td >{{orderInModal.productAmount}}</td>
         </tr>
+        <tr>
+            <th>User</th>
+            <td >{{user}}</td>
+        </tr>
+        <tr>
+            <th>Product</th>
+            <td >{{prodcut}}</td>
+        </tr>
     </table>
     `,
-    props:["orderInModal"]
+    props:["orderInModal","user","product"]
 }
