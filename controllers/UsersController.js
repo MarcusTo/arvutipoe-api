@@ -27,18 +27,18 @@ exports.getById = async (req, res) => {
     res.json(foundUser)
 }
 // UPDATE
-exports.editById = async (req, res) => {
-    const updateResult = await users.update({ ...req.body }, {
-        where: { id: req.params.id },
-        fields: ["name", "email", "phoneNumber"]
-    })
-    if (updateResult[0] == 0) {
-        return res.status(404).send({ error: "User not found" })
-    }
-    res.status(202)
-        .location(`${getBaseurl(req)}/users/${req.params.id}`)
-        .send()
-}
+// exports.editById = async (req, res) => {
+//     const updateResult = await users.update({ ...req.body }, {
+//         where: { id: req.params.id },
+//         fields: ["name", "email", "phoneNumber"]
+//     })
+//     if (updateResult[0] == 0) {
+//         return res.status(404).send({ error: "User not found" })
+//     }
+//     res.status(202)
+//         .location(`${getBaseurl(req)}/users/${req.params.id}`)
+//         .send()
+// }
 // DELETE
 exports.deleteById = async (req, res) => {
     const deletedAmount = await users.destroy({

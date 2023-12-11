@@ -40,10 +40,10 @@ export default {
             this.newUserModal = new bootstrap.Modal(document.getElementById("newUserModal"))
             this.newUserModal.show()
         },
-        updateView(user) {
-            this.update++
-            this.userInModal = user
-        },
+        // updateView(user) {
+        //     this.update++
+        //     this.userInModal = user
+        // },
         async saveNewUser() {
             console.log("Saving:", this.userInModal)
             const rawResponse = await fetch(this.API_URL + "/users/", {

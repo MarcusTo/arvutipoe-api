@@ -28,10 +28,10 @@ export default {
                         </template>
                         <template v-else>
                             <div class="col me-auto"></div>
-                            <div class="col-auto">
-                                <button type="button" class="btn btn-warning mx-2" @click="startEditing">Edit</button>
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            </div>
+                            // <div class="col-auto">
+                            //     <button type="button" class="btn btn-warning mx-2" @click="startEditing">Edit</button>
+                            //     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            // </div>
                         </template>
                     </div>
                 </div>
