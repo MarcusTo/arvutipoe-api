@@ -15,17 +15,17 @@ exports.createNew = async (req, res) => {
         .send(createdUser)
 }
 // READ
-exports.getAll = async (req, res) => {
-    const result = await users.findAll({ attributes: ["id", "name", "email", "phoneNumber"] })
-    res.json(result)
-}
-exports.getById = async (req, res) => {
-    const foundUser = await users.findByPk(req.params.id)
-    if (foundUser === null) {
-        return res.status(404).send({ error: `User not found` })
-    }
-    res.json(foundUser)
-}
+// exports.getAll = async (req, res) => {
+//     const result = await users.findAll({ attributes: ["id", "name", "email", "phoneNumber"] })
+//     res.json(result)
+// }
+// exports.getById = async (req, res) => {
+//     const foundUser = await users.findByPk(req.params.id)
+//     if (foundUser === null) {
+//         return res.status(404).send({ error: `User not found` })
+//     }
+//     res.json(foundUser)
+// }
 // UPDATE
 exports.editById = async (req, res) => {
     const updateResult = await users.update({ ...req.body }, {
