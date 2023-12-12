@@ -4,13 +4,9 @@ export default {
     <table class="table table-striped">
 
       <tr>
-        <td>{{id}}</td>
-      </tr>
-
-      <tr>
         <th>Product Amount:</th>
         <td><input type="number" :value="productAmount" @input="$emit('update:productAmount',$event.target.value)"></td>
-      <tr>
+      </tr>
 
       <tr>
         <th>User:</th>
@@ -27,7 +23,7 @@ export default {
                 <option v-for="product in products" :value="product.id">{{product.name}}</option>
             </select>
         </td>
-    </tr>
+      </tr>
     </table>
   `,
   props: ["id", "price", "productAmount", "userId", "productId" ],

@@ -4,15 +4,20 @@ export default {
     <table class="table table-striped">
 
         <tr>
+            <th>Order ID:</th>
+            <td >{{orderInModal.id}}</td>
+        </tr>
+
+        <tr>
             <th>Product Amount:</th>
             <td >{{orderInModal.productAmount}}</td>
         </tr>
         <tr>
-            <th>Product:</th>
+            <th>Product ID:</th>
             <td >{{orderInModal.productId}}</td>
         </tr>
         <tr>
-            <th>User:</th>
+            <th>User ID:</th>
             <td >{{orderInModal.userId}}</td>
         </tr>
     </table>
