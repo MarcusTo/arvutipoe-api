@@ -12,7 +12,7 @@ export default {
     </tr>
     <tr>
         <th>Product Amount:</th>
-        <input type="number" :value="productAmount" @input="$emit('update:productAmount', $event.target.value)">
+        <td><input type="number" :value="productAmount" @input="$emit('update:productAmount', $event.target.value)"></td>
     </tr>
 
 </table>`,

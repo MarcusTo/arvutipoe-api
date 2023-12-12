@@ -3,9 +3,6 @@ export default{
     template: `
     <table class="table table-striped">
     <tr>
-        <td>{{id}}</td>
-    </tr>
-    <tr>
         <th>Email:</th>
         <td><input type="text" :value="email" @input="$emit('update:email',$event.target.value)"></td>
     </tr>
