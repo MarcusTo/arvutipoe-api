@@ -7,6 +7,7 @@ export default {
             <th>Product amount:</th>
             <th>Product ID:</th>
             <th>User ID:</th>
+
         </tr>
         </thead>
         <tbody>
@@ -14,7 +15,6 @@ export default {
             <td @click="getOrder(order.id)">{{ order.productAmount}}</td>
             <td>{{ order.productId }}</td>
             <td>{{ order.userId }}</td>
-
 
         </tr>
         </tbody>
