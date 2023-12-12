@@ -39,7 +39,6 @@ th {
 }
 
 .modal-content {
-    position: relative;
     background-color: #fff;
     border-radius: 5px;
     padding: 20px;
@@ -60,11 +59,7 @@ th {
     border-collapse: collapse;
 }
 
-.modal-body table th, .modal-body table td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
-}
+
 
 /* Navbar Styles */
 .navbar {

@@ -4,11 +4,11 @@ const { getBaseurl } = require("./helpers");
 
 // CREATE
 exports.createNew = async (req, res) => {
-    if (!req.body.userId || !req.body.productId || !req.body.price || !req.body.productAmount) {
-        return res.status(400).send({ error: "Required parameter 'id' is missing" });
+    if ( !req.body.productAmount || !req.body.productId || !req.body.userId ) {
+        return res.status(400).send({ error: "One or all required parameters are missing " });
     }
-    const createdOrder = await orders.create({ ...req.body }, {
-        fields: ["userId","productId","price","productAmount", ]
+    const createdOrder = await orders.create(req.body, {
+        fields: ["productAmount", "productId", "userId"]
     });
     res.status(201)
         .location(`${getBaseurl(req)}/orders/${createdOrder.id}`)
@@ -16,7 +16,7 @@ exports.createNew = async (req, res) => {
 };
 // READ
 exports.getAll = async (req, res) => {
-    const result = await orders.findAll({ attributes: ["id", "userId","productId","price","productAmount" ] })
+    const result = await orders.findAll({ attributes: ["productAmount", "productId", "userId"] })
     res.json(result);
 };
 exports.getById = async (req, res) => {
@@ -30,7 +30,7 @@ exports.getById = async (req, res) => {
 exports.editById = async (req, res) => {
     const updateResult = await orders.update({ ...req.body }, {
         where: { id: req.params.id },
-        fields: ["userId","productId","price","productAmount" ]
+        fields: ["productAmount", "productId", "userId"]
     });
     if (updateResult[0] == 0) {
         return res.status(404).send({ error: "Order not found" });
@@ -42,7 +42,7 @@ exports.editById = async (req, res) => {
 // DELETE
 exports.deleteById = async (req, res) => {
     const deletedAmount = await orders.destroy({
-        where: { id: req.params.id }
+        where: { }
     });
     if (deletedAmount === 0) {
         return res.status(404).send({ error: "Order not found" });

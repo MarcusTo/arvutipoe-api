@@ -4,16 +4,18 @@ export default {
     <table id="ordersTable" class="table table-striped table-bordered">
     <thead>
         <tr>
-            <th>User</th>
-            <th>Product</th>
-            <th>Price</th>
+            <th>Product amount:</th>
+            <th>Product ID:</th>
+            <th>User ID:</th>
         </tr>
         </thead>
         <tbody>
         <tr v-for="order in orders">
-            <td @click="getOrder(order.id)">{{ order.User.name }}</td>
-            <td>{{ order.Product.name }}</td>
-            <td>{{ order.price }}</td>
+            <td @click="getOrder(order.id)">{{ order.productAmount}}</td>
+            <td>{{ order.productId }}</td>
+            <td>{{ order.userId }}</td>
+
+
         </tr>
         </tbody>
     </table>
