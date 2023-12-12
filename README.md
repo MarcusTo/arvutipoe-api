@@ -6,6 +6,13 @@ The idea behind our project is to create a computer online store that offers a w
 
 
 ### Installing
+In PowerShell or GitBash run:
+
+1. npm i
+2. npm i --save sequelize
+
+OR:
+1. npm --install all
 
 ## Github
 Open <>Code in Github and copy  file link. Open Powershell or Git Bash by holding down shift and right-clicking in the file you want to clone the project into
