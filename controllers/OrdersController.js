@@ -16,7 +16,7 @@ exports.createNew = async (req, res) => {
 };
 // READ
 exports.getAll = async (req, res) => {
-    const result = await orders.findAll({ attributes: ["id","productAmount", "productId", "userId"] })
+    const result = await orders.findAll({ attributes: ["id","productAmount", "productId", "userId", ] })
     res.json(result);
 };
 exports.getById = async (req, res) => {
@@ -41,11 +41,17 @@ exports.editById = async (req, res) => {
 };
 // DELETE
 exports.deleteById = async (req, res) => {
-    const deletedAmount = await orders.destroy({
-        where: { }
-    });
-    if (deletedAmount === 0) {
-        return res.status(404).send({ error: "Order not found" });
+    try {
+        const deletedOrder = await orders.destroy({
+            where: { id: req.params.id }
+        });
+
+        if (deletedOrder === 0) {
+            return res.status(404).send({ error: "Order not found" });
+        }
+
+        res.status(204).send();
+    } catch (error) {
+        res.status(500).send({ error: "Something went wrong while deleting the order" });
     }
-    res.status(204).send();
 };

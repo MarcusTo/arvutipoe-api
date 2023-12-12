@@ -6,8 +6,10 @@ export default {
         <tr>
             <th>Order ID:</th>
             <th>Product amount:</th>
-            <th>Product ID:</th>
-            <th>User ID:</th>
+            <th>Product ID:</th> 
+            <th>Product Name:</th>
+            <th>User ID:</th> 
+            <th>User Name:</th>
 
 
         </tr>
@@ -17,7 +19,9 @@ export default {
             <td @click="getOrder(order.id)">{{ order.id}}</td>
             <td>{{ order.productAmount}}</td>
             <td>{{ order.productId }}</td>
-            <td>{{ order.userId }}</td>
+            <td>{{ order.productName }}</td>
+            <td>{{ order.userId}}</td>
+            <td>{{ order.userName}}</td>
 
         </tr>
         </tbody>

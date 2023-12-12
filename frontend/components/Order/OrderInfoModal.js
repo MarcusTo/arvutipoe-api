@@ -12,7 +12,7 @@ export default {
             </div>
             <div class="modal-body">
                 <order-form v-if="isEditing" v-model:id="modifiedOrder.id" v-model:price="modifiedOrder.price"
-                 v-model:userId="modifiedOrder.userId" v-model:productAmount="modifiedOrder.productAmount" v-model:productId="modifiedOrder.productId" ></order-form>
+                 v-model:userId="modifiedOrder.userId" v-model:userName="modifiedOrder.userName" v-model:productAmount="modifiedOrder.productAmount" v-model:productId="modifiedOrder.productId" v-model:productName="modifiedOrder.productName" ></order-form>
                 <order-details v-else :orderInModal="orderInModal" :user="userName" :product="productName"></order-details>
             </div>
             <div class="modal-footer">

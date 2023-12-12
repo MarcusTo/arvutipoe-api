@@ -17,9 +17,18 @@ export default {
             <td >{{orderInModal.productId}}</td>
         </tr>
         <tr>
+            <th>Product Name:</th>
+            <td >{{orderInModal.productName}}</td>
+        </tr>
+        <tr>
             <th>User ID:</th>
             <td >{{orderInModal.userId}}</td>
         </tr>
+        <tr>
+            <th>User Name:</th>
+            <td >{{orderInModal.userName}}</td>
+        </tr>
+
     </table>
     `,
     props:["orderInModal","user","product"]
