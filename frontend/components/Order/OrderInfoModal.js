@@ -12,8 +12,8 @@ export default {
             </div>
             <div class="modal-body">
                 <order-form v-if="isEditing" v-model:id="modifiedOrder.id" v-model:price="modifiedOrder.price"
-                 v-model:userId="modifiedOrder.userId" v-model:userName="modifiedOrder.userName" v-model:productAmount="modifiedOrder.productAmount" v-model:productId="modifiedOrder.productId" v-model:productName="modifiedOrder.productName" ></order-form>
-                <order-details v-else :orderInModal="orderInModal" :user="userName" :product="productName"></order-details>
+                 v-model:UserId="modifiedOrder.UserId" v-model:userName="modifiedOrder.userName" v-model:productAmount="modifiedOrder.productAmount" v-model:ProductId="modifiedOrder.ProductId" v-model:productName="modifiedOrder.productName" ></order-form>
+                <order-details v-else :orderInModal="orderInModal"></order-details>
             </div>
             <div class="modal-footer">
                 <div class="container">
@@ -54,14 +54,14 @@ export default {
     computed: {
         userName:{
             get(){
-                const user = this.users.find(user => user.id == this.orderInModal.userId)
+                const user = this.users.find(user => user.id == this.orderInModal.UserId)
                 if(user) return user.name
                 return "";
             }
         },
         productName:{
             get(){
-                const product = this.products.find(product => product.id == this.orderInModal.productId)
+                const product = this.products.find(product => product.id == this.orderInModal.ProductId)
                 if(product) return product.name
                 return "";
             }

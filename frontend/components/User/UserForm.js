@@ -14,9 +14,10 @@ export default{
         <td><input type="text" :value="name" @input="$emit('update:name',$event.target.value)"></td>
     </tr>
     <tr>
-        <th>Phone Number:</th>
-        <td ><input type="number"input :value="phoneNumber" @input="$emit('update:phoneNumber',$event.target.value)"></td>
-    </tr>
+    <th>Phone Number:</th>
+    <td><input type="number" :value="phoneNumber" @input="$emit('update:phoneNumber', $event.target.value)"></td>
+</tr>
+
 </table>
     `,
     props: ["id","email","name","phoneNumber","isEditing"],

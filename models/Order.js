@@ -5,7 +5,7 @@ module.exports = (dbConnection, Sequelize, Product, User) => {
             primaryKey: true,
             autoIncrement: true
         },
-        userId:{
+        UserId:{
             type:Sequelize.INTEGER,
             allowNull:false,
             references:{
@@ -13,7 +13,7 @@ module.exports = (dbConnection, Sequelize, Product, User) => {
                 key:"id"
             }
         },
-        productId: {
+        ProductId: {
             type: Sequelize.INTEGER,
             allowNull: false,
             references: {

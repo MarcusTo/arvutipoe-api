@@ -11,7 +11,7 @@ export default {
       <tr>
         <th>User:</th>
         <td>
-            <select :value="userId" @input="$emit('update:userId',$event.target.value)">
+            <select :value="UserId" @input="$emit('update:UserId',$event.target.value)">
                 <option v-for="user in users" :value="user.id">{{user.name}}</option>
             </select>
         </td>
@@ -19,15 +19,15 @@ export default {
       <tr>
         <th>Product:</th>
         <td>
-            <select :value="productId" @input="$emit('update:productId',$event.target.value)">
+            <select :value="ProductId" @input="$emit('update:ProductId',$event.target.value)">
                 <option v-for="product in products" :value="product.id">{{product.name}}</option>
             </select>
         </td>
       </tr>
     </table>
   `,
-  props: ["id", "price", "productAmount", "userId", "productId" ],
-  emits: ["update:id", "update:price", "update:productAmount", "update:userId", "update:productId"  ],
+  props: ["id", "price", "productAmount", "UserId", "ProductId","productName","userName" ],
+  emits: ["update:id", "update:price", "update:productAmount", "update:UserId","userName", "update:ProductId","productName"  ],
   data() {
     return{
       users: [],

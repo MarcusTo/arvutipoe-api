@@ -18,16 +18,16 @@ export default {
         <tr v-for="order in orders">
             <td @click="getOrder(order.id)">{{ order.id}}</td>
             <td>{{ order.productAmount}}</td>
-            <td>{{ order.productId }}</td>
-            <td>{{ order.productName }}</td>
-            <td>{{ order.userId}}</td>
-            <td>{{ order.userName}}</td>
+            <td>{{ order.ProductId }}</td>
+            <td>{{ order.Product.name }}</td>
+            <td>{{ order.UserId}}</td>
+            <td>{{ order.User.name}}</td>
 
         </tr>
         </tbody>
     </table>
     `,
-    emits: ["showModal"],
+        emits: ["showModal"],
     data() {
         return {
             orders: []
@@ -35,6 +35,7 @@ export default {
     },
     async created() {
         this.orders = await (await fetch("http://localhost:8080/orders")).json()
+        console.log(this.orders)
     },
     methods: {
         getOrder: async function (id) {

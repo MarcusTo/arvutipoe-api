@@ -54,11 +54,11 @@ paths:
                             examples:
                                 Single Order:
                                     value:
-                                        id: 3
+                                        id: 1
+                                        UserId: 2
+                                        ProductId: 3
                                         price: 1600
-                                        productId: 25
-                                        productAmount: 1
-                                        invoiceId: 4
+                                        productAmount: 4
                     description: Returns order information
                 '404':
                     content:
@@ -96,9 +96,8 @@ paths:
                                 value:
                                     id: 3
                                     price: 1600
-                                    productId: 25
                                     productAmount: 1
-                                    invoiceId: 4
+                                    productId: 6
                 required: true
             tags:
                 - orders
@@ -111,11 +110,11 @@ paths:
                             examples:
                                 newOrder:
                                     value:
-                                        id: 3
+                                        id: 1
+                                        userId: 2
+                                        productId: 3
                                         price: 1600
-                                        productId: 25
-                                        productAmount: 1
-                                        invoiceId: 4
+                                        productAmount: 4
                     description: Order updated.
                 '404':
                     content:
@@ -196,9 +195,9 @@ paths:
                             examples:
                                 Single product:
                                     value:
-                                        name: Testikas
-                                        id: 42
-                                        price: 900
+                                        id: 1
+                                        name: 1OF1
+                                        price: 1600
                     description: Returns product information.
                 '404':
                     content:
@@ -234,9 +233,9 @@ paths:
                         examples:
                             Updated Product:
                                 value:
-                                    id: 40
-                                    name: New product
-                                    price: 3333
+                                    id: 1
+                                    name: 1OF1
+                                    price: 1600
                 required: true
             tags:
                 - products
@@ -254,6 +253,12 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/product'
+                            examples:
+                                Update product:
+                                    value:
+                                        id: 1
+                                        name: 1OF1
+                                        price: 1600
                     description: Product updated.
                 '404':
                     content:
@@ -323,7 +328,10 @@ paths:
                                     type: string
                             examples:
                                 List of all Products:
-                                    value: []
+                                    value:
+                                        id: 1
+                                        name: 1OF1
+                                        price: 1600
                     description: |
                         Returns a list of products.
             summary: Get a list of products.
@@ -338,9 +346,9 @@ paths:
                         examples:
                             addProduct:
                                 value:
-                                    id: '4'
-                                    name: PcOneOfOne
-                                    price: 2000
+                                    id: 1
+                                    name: 1OF1
+                                    price: 1600
                 required: true
             tags:
                 - products
@@ -353,8 +361,9 @@ paths:
                             examples:
                                 CreatedProduct:
                                     value:
-                                        name: Test product
-                                        price: 599
+                                        id: 1
+                                        name: 1OF1
+                                        price: 1600
                     description: "\r\nProduct has been created."
                 '400':
                     content:
@@ -420,14 +429,11 @@ paths:
                                 $ref: '#/components/schemas/user'
                             examples:
                                 NewUser:
-                                    value: |4
-
-                                            {
-                                                "id": 95,
-                                                "email": "marcusto@gmail.com",
-                                                "name": "MarcusTo",
-                                                "phoneNumber": 5555555
-                                            }
+                                    value:
+                                        id: 3
+                                        email: marcusto@gmail.com
+                                        name: MarcusTo
+                                        phoneNumber: 5555555
                     description: User has been created
                 '400':
                     content:
@@ -466,11 +472,10 @@ paths:
                             examples:
                                 Single User:
                                     value:
-                                        -
-                                            id: 95
-                                            email: marcusto@gmail.com
-                                            name: MarcusTo
-                                            phoneNumber: 5555555
+                                        id: 95
+                                        email: marcusto@gmail.com
+                                        name: MarcusTo
+                                        phoneNumber: 5555555
                     description: Returns user information.
                 '404':
                     content:
@@ -599,11 +604,11 @@ paths:
                             examples:
                                 Return all orders:
                                     value:
-                                        id: 3
+                                        id: 1
+                                        UserId: 2
+                                        ProductId: 3
                                         price: 1600
-                                        productId: 25
-                                        productAmount: 1
-                                        invoiceId: 4
+                                        productAmount: 4
                     description: Returns a list of orders
             summary: Get a list of orders.
             description: Returns a list of orders
@@ -616,11 +621,11 @@ paths:
                         examples:
                             AddOrder:
                                 value:
-                                    id: 3
+                                    id: 1
+                                    UserId: 2
+                                    ProductId: 3
                                     price: 1600
-                                    productId: 25
-                                    productAmount: 1
-                                    invoiceId: 4
+                                    productAmount: 4
                 required: true
             tags:
                 - orders
@@ -633,11 +638,11 @@ paths:
                             examples:
                                 newOrder:
                                     value:
-                                        id: 3
+                                        id: 1
+                                        UserId: 2
+                                        ProductId: 3
                                         price: 1600
-                                        productId: 25
-                                        productAmount: 1
-                                        invoiceId: 4
+                                        productAmount: 4
                     description: Order has been created.
                 '400':
                     content:
@@ -662,223 +667,6 @@ paths:
             summary: Create order
             description: |
                 Creates a new order
-    /invoices:
-        get:
-            tags:
-                - invoices
-            responses:
-                '200':
-                    content:
-                        application/json:
-                            schema:
-                                type: array
-                                items:
-                                    type: string
-                            examples:
-                                Get a list of all invoices:
-                                    value: []
-                    description: Returns a list of invoices.
-            summary: Get a list of invoices.
-            description: Returns a list of invoices
-        post:
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: '#/components/schemas/invoice'
-                        examples:
-                            addInvoice:
-                                value:
-                                    price: 3000
-                                    orderId: 52
-                                    userid: 87
-                required: true
-            tags:
-                - invoices
-            responses:
-                '201':
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/invoice'
-                            examples:
-                                CreatedInvoice:
-                                    value:
-                                        id: 3
-                                        price: 1600
-                                        orderId: 3
-                                        userId: 4
-                    description: |
-                        Invoice has been created
-                '400':
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/error'
-                            examples:
-                                Not Found:
-                                    value:
-                                        error: Invoice Not Found
-                    description: Invoice not found.
-                '500':
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/error'
-                            examples:
-                                Not Found:
-                                    value:
-                                        Error: Internal Server Error
-                    description: 'Internal server error, try again later.'
-            summary: Create invoice
-            description: Creates a new invoice
-    '/invoices/{ID}':
-        get:
-            tags:
-                - invoices
-            parameters:
-                -
-                    name: ID
-                    description: ID
-                    schema:
-                        type: integer
-                    in: path
-                    required: true
-            responses:
-                '200':
-                    content:
-                        application/json:
-                            schema:
-                                type: array
-                                items:
-                                    $ref: '#/components/schemas/invoice'
-                            examples:
-                                Single Invoice:
-                                    value:
-                                        id: 31
-                                        price: 44
-                                        orderId: 90
-                                        userid: 24
-                    description: Returns invoice information.
-                '404':
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/error'
-                            examples:
-                                Not Found:
-                                    value:
-                                        Error: Invoice Not Found
-                    description: Invoice not found
-                '500':
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/error'
-                            examples:
-                                Not Found:
-                                    value:
-                                        Error: Invoice Not Found
-                    description: 'Iternal Server Error, Try Again Later'
-            summary: Returns information of an invoice.
-            description: Get a single invoice
-        put:
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: '#/components/schemas/invoice'
-                        examples:
-                            newInvoice:
-                                value:
-                                    id: 3
-                                    price: 1600
-                                    orderId: 3
-                                    userId: 4
-                required: true
-            tags:
-                - invoices
-            parameters:
-                -
-                    name: ID
-                    description: ID
-                    schema:
-                        type: integer
-                    in: path
-                    required: true
-            responses:
-                '202':
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/invoice'
-                            examples:
-                                newInvoice:
-                                    value:
-                                        id: 3
-                                        price: 1600
-                                        orderId: 3
-                                        userId: 4
-                    description: |
-                        Invoice updated.
-                '404':
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/error'
-                            examples:
-                                Not Found:
-                                    value:
-                                        Error: Invoice Not Found
-                    description: Invoice not found
-                '500':
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/error'
-                            examples:
-                                Not Found:
-                                    value:
-                                        Error: Internal Server Error
-                    description: Internal Server Error. Try Again Later
-            summary: Update invoice.
-            description: Updates invoice information.
-        delete:
-            tags:
-                - invoices
-            responses:
-                '204':
-                    description: Invoice has been deleted
-                '404':
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/error'
-                            examples:
-                                Invoice not found:
-                                    value:
-                                        Error: Invoice not found
-                    description: Invoice not found
-                '500':
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/error'
-                            examples:
-                                Server error:
-                                    value:
-                                        Error: Internal server error.
-                    description: Internal server error.
-            summary: Delete invoice
-            description: Deletes an exsisting invoice.
-        parameters:
-            -
-                name: ID
-                description: id
-                schema:
-                    type: integer
-                in: path
-                required: true
 components:
     schemas:
         error:
@@ -896,75 +684,54 @@ components:
             type: object
             properties:
                 name:
+                    description: Product Name
                     type: string
                 id:
                     format: int32
+                    description: Product Id
                     type: integer
                 price:
                     format: int32
-                    description: ''
-                    type: integer
-            example:
-                name: Gaming PC Ultra
-                price: 3999
-        invoice:
-            title: Root Type for invoice
-            description: Invoice with product id and invoice specific id.
-            type: object
-            properties:
-                id:
-                    format: int32
-                    type: integer
-                price:
-                    format: int32
-                    type: integer
-                orderId:
-                    format: int32
-                    description: ''
-                    type: integer
-                userid:
-                    format: int32
+                    description: Product Price
                     type: integer
             example:
                 id: 1
-                orderid: 2
-                name: Gaming PC Ultra
-                price: 3999
+                name: 1OF1
+                price: 1600
+                productAmount: 2
         order:
             title: Root Type for order
             description: ''
             required: []
             type: object
             properties:
-                productId:
-                    format: int32
-                    description: ''
-                    type: integer
-                productAmount:
-                    format: int32
-                    description: ''
-                    type: integer
-                invoiceId:
-                    format: int32
-                    description: invoiceId
-                    type: integer
-                    example: ''
-                price:
-                    format: int32
-                    description: Product Price
-                    type: integer
-                    example: ''
                 id:
                     format: int32
                     description: OrderId
                     type: integer
                     example: ''
+                userId:
+                    format: int32
+                    description: User Id
+                    type: integer
+                productId:
+                    format: int32
+                    description: Product Id
+                    type: integer
+                price:
+                    format: int32
+                    description: Product Price
+                    type: integer
+                productAmount:
+                    format: int32
+                    description: Product Amount
+                    type: integer
             example:
                 id: 1
+                userId: 2
                 productId: 3
+                price: 1600
                 productAmount: 4
-                invoiceId: 5
-                price: 666
         user:
             title: Root type for user
             description: ''
@@ -972,23 +739,23 @@ components:
             properties:
                 id:
                     format: int32
-                    description: ''
+                    description: User Id
                     type: integer
                 email:
-                    description: ''
+                    description: User Email
                     type: string
                 name:
-                    description: ''
+                    description: User Name
                     type: string
                 phoneNumber:
                     format: int32
-                    description: ''
+                    description: User Phone Number
                     type: integer
             example:
-                id: 33
+                id: 1
                 email: MarcusTo@gmail.com
                 name: MarcusTo
-                phoneNumber: 777777
+                phoneNumber: 555555
 tags:
     -
         name: products

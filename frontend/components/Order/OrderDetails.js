@@ -14,22 +14,22 @@ export default {
         </tr>
         <tr>
             <th>Product ID:</th>
-            <td >{{orderInModal.productId}}</td>
+            <td >{{orderInModal.ProductId}}</td>
         </tr>
         <tr>
             <th>Product Name:</th>
-            <td >{{orderInModal.productName}}</td>
+            <td >{{orderInModal.Product.name}}</td>
         </tr>
         <tr>
             <th>User ID:</th>
-            <td >{{orderInModal.userId}}</td>
+            <td >{{orderInModal.UserId}}</td>
         </tr>
         <tr>
             <th>User Name:</th>
-            <td >{{orderInModal.userName}}</td>
+            <td >{{orderInModal.User.name}}</td>
         </tr>
 
     </table>
     `,
-    props:["orderInModal","user","product"]
+    props:["orderInModal"]
 }

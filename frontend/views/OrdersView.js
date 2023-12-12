@@ -9,7 +9,7 @@ export default {
     <order-list :key="update" @showModal="openModal"></order-list>
     <order-info-modal @orderUpdated="updateView" :orderInModal="orderInModal"></order-info-modal>
     <new-object-modal id="newOrderModal" @save="saveNewOrder">
-        <order-form v-model:productAmount="orderInModal.productAmount" v-model:productId="orderInModal.productId" v-model:userId="orderInModal.userId" v-model:userName="orderInModal.userName" v-model:productName="orderInModal.productName"></order-form>
+        <order-form v-model:productAmount="orderInModal.productAmount"  v-model:ProductId="orderInModal.ProductId" v-model:productName="orderInModal.productName" v-model:UserId="orderInModal.UserId" v-model:userName="orderInModal.userName" ></order-form>
         <div class="alert alert-danger" role="alert" v-show="error">{{error}}</div>
     </new-object-modal>
     `,
@@ -22,7 +22,7 @@ export default {
     data() {
         return {
             update: 0,
-            orderInModal: { productAmount:"", productId: "", userId: "", userName: "", productName: "",},
+            orderInModal: { productAmount:"", ProductId: "", productName: "", UserId: "", userName: "" },
             newOrderModal: {},
             error: ""
         }

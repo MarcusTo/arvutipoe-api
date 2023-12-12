@@ -23,7 +23,12 @@ db.users = require("./models/User")(sequelize, Sequelize)
 db.products = require("./models/Product")(sequelize, Sequelize)
 
 db.orders = require("./models/Order")(sequelize, Sequelize, db.products, db.users)
-db.orders.hasMany(db.products)
+db.products.belongsToMany(db.users, {through: db.orders})
+db.users.belongsToMany(db.products, {through: db.orders})
+db.users.hasMany(db.orders)
+db.orders.belongsTo(db.users)
+db.products.hasMany(db.orders)
+db.orders.belongsTo(db.products)
 
 
 
@@ -61,11 +66,11 @@ sync = async () => {
 
             const [order, createdPU] = await db.orders.findOrCreate({
                 where: {
-                    userId: 1
+                    UserId: 1
                 },
                 defaults: {
-                    userId: user.id,
-                    productId: product.id,
+                    UserId: user.id,
+                    ProductId: product.id,
                     productAmount:1,
                     price: 1600
                 }
